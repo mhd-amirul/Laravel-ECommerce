@@ -23,16 +23,16 @@
                             @forelse ($products as $p)
                             <tr>
                                 <td class="serial">{{ $loop->iteration }}</td>
-                                <td>  <span class="name">{{ $p->name }}</span> </td>
+                                <td><span class="name">{{ $p->name }}</span> </td>
                                 <td> <span class="product">{{ $p->type }}</span> </td>
                                 <td><span class="count">{{ $p->quantity }}</span></td>
                                 <td><span class="count">{{ $p->price }}</span></td>
                                 <td>
-                                    <a href="#" class="btn btn-warning">Edit</a>
+                                    <a href="{{ route('barang.edit', $p->id) }}" class="btn btn-warning">Edit</a>
                                     <form action="{{ route('barang.destroy', $p->id) }}" method="post">
                                         @method('delete')
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger mt-auto">Delete</button>
                                     </form>
                                 </td>
                             </tr>

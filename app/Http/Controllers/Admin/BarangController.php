@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Barang;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BarangRequest;
 
 class BarangController extends Controller
 {
@@ -20,16 +20,8 @@ class BarangController extends Controller
         return view('pages.admin.barang.tambah');
     }
 
-    public function store(Request $request)
+    public function store(BarangRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'type' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|integer',
-            'quantity' => 'required|integer'
-        ]);
-
         $data = $request->all();
         $data['slug'] = Str::slug($request->name);
 
@@ -42,4 +34,25 @@ class BarangController extends Controller
         Barang::findOrFail($id)->delete();
         return redirect()->back();
     }
+
+    public function edit($id)
+    {
+        $barang = Barang::findOrFail($id);
+        return view('pages.admin.barang.edit')->with(['barang' => $barang]);
+    }
+
+    public function update($id, BarangRequest $request)
+    {
+        $barang = Barang::findorfail($id);
+
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->name);
+        $barang->update($data);
+
+        return redirect()->route('barang.index');
+    }
+
+    // public function show($id)
+    // {
+    // }
 }
