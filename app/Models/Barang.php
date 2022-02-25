@@ -12,4 +12,9 @@ class Barang extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }
