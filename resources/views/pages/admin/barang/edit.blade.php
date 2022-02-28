@@ -14,7 +14,6 @@
                     </ul>
                 </div>
             @endif
-            @csrf    
                 <div class="mb-3">
                     <label for="name" class="form-label" >Name</label>
                     <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{ $barang->name }}">

@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 
 Route::get('/user2', [HomeController::class, 'index']);
-Route::view('/product', 'pages.user.product');
+Route::get('/product/{slug}', [HomeController::class, 'show'])->name('product.show');
 Route::view('/card', 'pages.user.card');
 
 Route::group(['middleware' => 'auth'], function() {
