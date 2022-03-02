@@ -75,10 +75,18 @@
                         <h4>{{ $product->price }}</h4>
                         </div>
                         <div class="quantity">
-                        <div class="pro-qty">
-                            <input type="text" value="{{ $product->quantity }}" />
-                        </div>
-                        <a href="#" class="primary-btn pd-cart">Add To Cart</a>
+                        @auth
+                        <form action="{{ route('card.add', $product->id) }}" method="post">
+                            @csrf
+                            <div class="pro-qty">
+                                <input type="text" name="quantity" value="{{ $product->quantity }}" />
+                            </div>
+                            <button class="primary-btn pd-cart border-0" type="submit">Add To Cart</button>
+                        </form>
+                        @endauth
+                        @guest
+                            <a href="{{ route('login') }}" class="primary-btn pd-cart">Login</a>
+                        @endguest
                         </div>
                     </div>
                     </div>

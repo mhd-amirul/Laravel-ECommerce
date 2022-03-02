@@ -13,7 +13,15 @@
             </div>
           </div>
           <div class="ht-right">
-            <a href="/register" class="login-panel"><i class="fa fa-user"></i>Masuk</a>
+            @auth
+                <form action="{{ route('logout') }}" method="post">
+                  @csrf
+                    <button class="login-panel badge bg-light border-0 mt-1"><i class="fa fa-user"></i>Log Out</button>
+                </form>
+            @endauth
+            @guest
+                <a href="/register" class="login-panel"><i class="fa fa-user"></i>Masuk</a>
+            @endguest
           </div>
         </div>
       </div>

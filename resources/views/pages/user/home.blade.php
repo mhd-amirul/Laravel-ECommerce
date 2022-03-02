@@ -54,15 +54,22 @@
           @forelse ($products as $p)
           <div class="product-item">
             <div class="pi-pic">
-              <img height="100px" src="{{ isset($p->galleries[0]) == null ? 'https://dummyimage.com/600x400/000/fff' : Storage::url($p->galleries[0]->image) }}" alt="" />
+              <img height="300px" src="{{ isset($p->galleries[0]) == null ? 'https://dummyimage.com/600x400/000/fff' : Storage::url($p->galleries[0]->image) }}" alt="" />
               <div class="sale">Sale</div>
               <div class="icon">
                 <i class="icon_heart_alt"></i>
               </div>
               <ul>
-                <li class="w-icon active">
-                  <a href="#"><i class="icon_bag_alt"></i></a>
-                </li>
+                @auth
+                  <li class="w-icon active">
+                    <a href="#"><i class="icon_bag_alt"></i></a>
+                  </li>
+                @endauth
+                @guest
+                  <li class="w-icon active">
+                    <a href="#"><i class="arrow_right"></i></a>
+                  </li>
+                @endguest
                 <li class="quick-view"><a href="{{ route('product.show', $p->slug) }}">+ Quick View</a></li>
                 <li class="w-icon">
                   <a href="#"><i class="fa fa-random"></i></a>
