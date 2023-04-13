@@ -42,7 +42,7 @@
                   </button>
                 </form>
                 <div class="switch-login">
-                  <a href="./login.html" class="or-login">Or Login</a>
+                  <a href="{{ route("signin") }}" class="or-login">Or Login</a>
                 </div>
               </div>
             </div>

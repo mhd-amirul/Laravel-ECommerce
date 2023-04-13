@@ -5,15 +5,15 @@
         <div class="ht-left">
           <div class="mail-service">
             <i class=" fa fa-envelope"></i>
-            uniform_shop@gmail.com
+            {{ $basic["shop_email"] }}
           </div>
           <div class="phone-service">
             <i class=" fa fa-phone"></i>
-            +65 11.188.888
+            {{ $basic["shop_number"] }}
           </div>
         </div>
         <div class="ht-right">
-          <a href="#" class="login-panel"><i class="fa fa-user"></i>Masuk</a>
+          <a href="{{ route("signin") }}" class="login-panel"><i class="fa fa-user"></i>Masuk</a>
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@
                     <h5>$120.00</h5>
                   </div>
                   <div class="select-button">
-                    <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                    <a href="{{ route("shopping-card") }}" class="primary-btn view-card">VIEW CARD</a>
                     <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
                   </div>
                 </div>

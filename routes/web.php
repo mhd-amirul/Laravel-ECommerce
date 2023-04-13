@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\auth\authController;
+use App\Http\Controllers\home\homeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,25 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/laravel-welcome', function () { return view('welcome'); });
 
-Route::get('index', function () {
-    return view("root.pages.index");
-});
+Route::get('signin', [authController::class, "go_to_login"])->name("signin");
+Route::get('signup', [authController::class, "go_to_register"])->name("signup");
 
-Route::get('masuk', function () {
-    return view("root.pages.login");
-});
-
-Route::get('daftar', function () {
-    return view("root.pages.register");
-});
-
-Route::get('produk', function () {
-    return view("root.pages.product");
-});
+Route::get('/', [homeController::class, "go_to_index"]);
+Route::get('product', [homeController::class, "go_to_product"])->name("product");
+Route::get('shopping-card', [homeController::class, "go_to_shop_card"])->name("shopping-card");
 
 Route::get('cart', function () {
     return view("root.pages.shopping-cart");

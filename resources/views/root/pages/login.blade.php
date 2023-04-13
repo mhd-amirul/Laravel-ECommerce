@@ -47,7 +47,7 @@
                 </button>
             </form>
             <div class="switch-login">
-                <a href="./register.html" class="or-login"
+                <a href="{{ route("signup") }}" class="or-login"
                 >Or Create An Account</a
                 >
             </div>

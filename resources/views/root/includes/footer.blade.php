@@ -8,9 +8,9 @@
               <a href="#"><img src="{{ url('images/footer-logo.png') }}" alt=""/></a>
             </div>
             <ul>
-              <li>Address: 60-49 Road 11378 New York</li>
-              <li>Phone: +65 11.188.888</li>
-              <li>Email: hello.shayna@gmail.com</li>
+              <li>Address: {{ $basic["shop_address"] }}</li>
+              <li>Phone: {{ $basic["shop_number"] }}</li>
+              <li>Email: {{ $basic["shop_email"] }}</li>
             </ul>
             <div class="footer-social">
               <a href="#"><i class="fa fa-facebook"></i></a>
@@ -27,7 +27,7 @@
               <li><a href="#">About Us</a></li>
               <li><a href="#">Checkout</a></li>
               <li><a href="#">Contact</a></li>
-              <li><a href="#">Serivius</a></li>
+              <li><a href="#">Service</a></li>
             </ul>
           </div>
         </div>
@@ -53,7 +53,7 @@
               <script>
                 document.write(new Date().getFullYear());
               </script>
-              All rights reserved | Shayna
+              All rights reserved | Fashi
             </div>
             <div class="payment-pic">
               <img src="{{ url('images/payment-method.png') }}" alt="" />

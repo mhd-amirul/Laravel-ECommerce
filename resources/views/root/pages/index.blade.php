@@ -16,7 +16,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                 do eiusmod tempor incididunt ut labore et dolore
                 </p>
-                <a href="#" class="primary-btn">Shop Now</a>
+                <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
             </div>
             </div>
             <div class="off-card">
@@ -34,7 +34,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                 do eiusmod tempor incididunt ut labore et dolore
                 </p>
-                <a href="#" class="primary-btn">Shop Now</a>
+                <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
             </div>
             </div>
             <div class="off-card">
@@ -63,7 +63,7 @@
                     <li class="w-icon active">
                     <a href="#"><i class="icon_bag_alt"></i></a>
                     </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
                     <li class="w-icon">
                     <a href="#"><i class="fa fa-random"></i></a>
                     </li>
@@ -90,7 +90,7 @@
                     <li class="w-icon active">
                     <a href="#"><i class="icon_bag_alt"></i></a>
                     </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
                     <li class="w-icon">
                     <a href="#"><i class="fa fa-random"></i></a>
                     </li>
@@ -116,7 +116,7 @@
                     <li class="w-icon active">
                     <a href="#"><i class="icon_bag_alt"></i></a>
                     </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
                     <li class="w-icon">
                     <a href="#"><i class="fa fa-random"></i></a>
                     </li>
@@ -142,7 +142,7 @@
                     <li class="w-icon active">
                     <a href="#"><i class="icon_bag_alt"></i></a>
                     </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
                     <li class="w-icon">
                     <a href="#"><i class="fa fa-random"></i></a>
                     </li>
@@ -167,42 +167,42 @@
 
     <!-- Instagram Section Begin -->
     <div class="instagram-photo">
-    <div class="insta-item set-bg" data-setbg="{{ url('images/insta-1.jpg') }}">
-        <div class="inside-text">
-        <i class="ti-instagram"></i>
-        <h5><a href="#">colorlib_Collection</a></h5>
+        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-1.jpg') }}">
+            <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">colorlib_Collection</a></h5>
+            </div>
         </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{ url('images/insta-2.jpg') }}">
-        <div class="inside-text">
-        <i class="ti-instagram"></i>
-        <h5><a href="#">colorlib_Collection</a></h5>
+        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-2.jpg') }}">
+            <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">colorlib_Collection</a></h5>
+            </div>
         </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{ url('images/insta-3.jpg') }}">
-        <div class="inside-text">
-        <i class="ti-instagram"></i>
-        <h5><a href="#">colorlib_Collection</a></h5>
+        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-3.jpg') }}">
+            <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">colorlib_Collection</a></h5>
+            </div>
         </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{ url('images/insta-4.jpg') }}">
-        <div class="inside-text">
-        <i class="ti-instagram"></i>
-        <h5><a href="#">colorlib_Collection</a></h5>
+        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-4.jpg') }}">
+            <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">colorlib_Collection</a></h5>
+            </div>
         </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{ url('images/insta-5.jpg') }}">
-        <div class="inside-text">
-        <i class="ti-instagram"></i>
-        <h5><a href="#">colorlib_Collection</a></h5>
+        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-5.jpg') }}">
+            <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">colorlib_Collection</a></h5>
+            </div>
         </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="{{ url('images/insta-6.jpg') }}">
-        <div class="inside-text">
-        <i class="ti-instagram"></i>
-        <h5><a href="#">colorlib_Collection</a></h5>
+        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-6.jpg') }}">
+            <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">colorlib_Collection</a></h5>
+            </div>
         </div>
-    </div>
     </div>
     <!-- Instagram Section End -->
 @endsection
