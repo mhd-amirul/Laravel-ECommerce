@@ -2,6 +2,13 @@
 
 @section('content')
 
+    {{-- alert();
+    @error()
+      @foreach ($errors->all() as $error)
+          <div>{{ $error }}</div>
+      @endforeach
+    @enderror --}}
+
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">
@@ -22,20 +29,34 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
+              @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                </div>
+                <br><br>
+              @endif
               <div class="register-form">
                 <h2>Register</h2>
-                <form action="#">
+                <form action="{{ route("signup.create") }}" method="POST">
+                  @csrf
+                  @method("post")
                   <div class="group-input">
-                    <label for="username">Username or email address *</label>
-                    <input type="text" id="username" />
+                    <label for="email">Email address *</label>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}"/>
+                  </div>
+                  <div class="group-input">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}"/>
                   </div>
                   <div class="group-input">
                     <label for="pass">Password *</label>
-                    <input type="text" id="pass" />
+                    <input type="text" id="pass" name="pass" />
                   </div>
                   <div class="group-input">
-                    <label for="con-pass">Confirm Password *</label>
-                    <input type="text" id="con-pass" />
+                    <label for="con_pass">Confirm Password *</label>
+                    <input type="text" id="con_pass" name="con_pass" />
                   </div>
                   <button type="submit" class="site-btn register-btn">
                     REGISTER
