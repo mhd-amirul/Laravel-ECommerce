@@ -2,31 +2,15 @@
 <div class="partner-logo">
     <div class="container">
       <div class="logo-carousel owl-carousel">
-        <div class="logo-item">
-          <div class="tablecell-inner">
-            <img src="{{ url('images/logo-carousel/logo-1.png') }}" alt="" />
-          </div>
-        </div>
-        <div class="logo-item">
-          <div class="tablecell-inner">
-            <img src="{{ url('images/logo-carousel/logo-2.png') }}" alt="" />
-          </div>
-        </div>
-        <div class="logo-item">
-          <div class="tablecell-inner">
-            <img src="{{ url('images/logo-carousel/logo-3.png') }}" alt="" />
-          </div>
-        </div>
-        <div class="logo-item">
-          <div class="tablecell-inner">
-            <img src="{{ url('images/logo-carousel/logo-4.png') }}" alt="" />
-          </div>
-        </div>
-        <div class="logo-item">
-          <div class="tablecell-inner">
-            <img src="{{ url('images/logo-carousel/logo-5.png') }}" alt="" />
-          </div>
-        </div>
+        @if (isset($basic["partner"]))
+            @foreach ($basic["partner"] as $partner)
+              <div class="logo-item">
+                <div class="tablecell-inner">
+                  <img src="{{ asset('storage/'.$partner->uri) }}" alt="{{ $partner->name }}" />
+                </div>
+              </div>
+            @endforeach
+        @endif
       </div>
     </div>
   </div>
