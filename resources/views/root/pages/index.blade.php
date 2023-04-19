@@ -6,42 +6,65 @@
     <!-- Hero Section Begin -->
     <section class="hero-section">
     <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="{{ url('images/hero-1.jpg') }}">
-        <div class="container">
-            <div class="row">
-            <div class="col-lg-5">
-                <span>Bag,kids</span>
-                <h1>Black friday</h1>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                do eiusmod tempor incididunt ut labore et dolore
-                </p>
-                <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
+        @if (isset($discount))
+            @foreach ($discount as $item)
+                <div class="single-hero-items set-bg" data-setbg="{{ asset('storage/'.$item->image) }}">
+                    <div class="container">
+                        <div class="row">
+                        <div class="col-lg-5">
+                            <span>{{ $item->category }}</span>
+                            <h1>{{ $item->name }}</h1>
+                            <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                            do eiusmod tempor incididunt ut labore et dolore
+                            </p>
+                            {{-- <p>{{ $item->description }}</p> --}}
+                            <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
+                        </div>
+                        </div>
+                        <div class="off-card">
+                        <h2>Sale <span>{{ $item->discount }}%</span></h2>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif            
+        {{-- <div class="single-hero-items set-bg" data-setbg="{{ url('images/hero-1.jpg') }}">
+            <div class="container">
+                <div class="row">
+                <div class="col-lg-5">
+                    <span>Bag,kids</span>
+                    <h1>Black friday</h1>
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore
+                    </p>
+                    <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
+                </div>
+                </div>
+                <div class="off-card">
+                <h2>Sale <span>50%</span></h2>
+                </div>
             </div>
-            </div>
-            <div class="off-card">
-            <h2>Sale <span>50%</span></h2>
-            </div>
-        </div>
         </div>
         <div class="single-hero-items set-bg" data-setbg="{{ url('images/hero-2.jpg') }}">
-        <div class="container">
-            <div class="row">
-            <div class="col-lg-5">
-                <span>Bag,kids</span>
-                <h1>Black friday</h1>
-                <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                do eiusmod tempor incididunt ut labore et dolore
-                </p>
-                <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
+            <div class="container">
+                <div class="row">
+                <div class="col-lg-5">
+                    <span>Bag,kids</span>
+                    <h1>Black friday</h1>
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore
+                    </p>
+                    <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
+                </div>
+                </div>
+                <div class="off-card">
+                <h2>Sale <span>50%</span></h2>
+                </div>
             </div>
-            </div>
-            <div class="off-card">
-            <h2>Sale <span>50%</span></h2>
-            </div>
-        </div>
-        </div>
+        </div> --}}
     </div>
     </section>
     <!-- Hero Section End -->
@@ -52,112 +75,38 @@
         <div class="row">
         <div class="col-lg-12 mt-5">
             <div class="product-slider owl-carousel">
-            <div class="product-item">
-                <div class="pi-pic">
-                <img src="{{ url('images/products/women-1.jpg') }}" alt="" />
-                <div class="sale">Sale</div>
-                <div class="icon">
-                    <i class="icon_heart_alt"></i>
-                </div>
-                <ul>
-                    <li class="w-icon active">
-                    <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
-                    <li class="w-icon">
-                    <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                </ul>
-                </div>
-                <div class="pi-text">
-                <div class="catagory-name">Coat</div>
-                <a href="#">
-                    <h5>Pure Pineapple</h5>
-                </a>
-                <div class="product-price">
-                    $14.00
-                    <span>$35.00</span>
-                </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                <img src="{{ url('images/products/women-2.jpg') }}" alt="" />
-                <div class="icon">
-                    <i class="icon_heart_alt"></i>
-                </div>
-                <ul>
-                    <li class="w-icon active">
-                    <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
-                    <li class="w-icon">
-                    <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                </ul>
-                </div>
-                <div class="pi-text">
-                <div class="catagory-name">Shoes</div>
-                <a href="#">
-                    <h5>Guangzhou sweater</h5>
-                </a>
-                <div class="product-price">
-                    $13.00
-                </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                <img src="{{ url('images/products/women-3.jpg') }}" alt="" />
-                <div class="icon">
-                    <i class="icon_heart_alt"></i>
-                </div>
-                <ul>
-                    <li class="w-icon active">
-                    <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
-                    <li class="w-icon">
-                    <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                </ul>
-                </div>
-                <div class="pi-text">
-                <div class="catagory-name">Towel</div>
-                <a href="#">
-                    <h5>Pure Pineapple</h5>
-                </a>
-                <div class="product-price">
-                    $34.00
-                </div>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                <img src="{{ url('images/products/women-4.jpg') }}" alt="" />
-                <div class="icon">
-                    <i class="icon_heart_alt"></i>
-                </div>
-                <ul>
-                    <li class="w-icon active">
-                    <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
-                    <li class="w-icon">
-                    <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                </ul>
-                </div>
-                <div class="pi-text">
-                <div class="catagory-name">Towel</div>
-                <a href="#">
-                    <h5>Converse Shoes</h5>
-                </a>
-                <div class="product-price">
-                    $34.00
-                </div>
-                </div>
-            </div>
+                @if (isset($products))
+                    @foreach ($products as $item)
+                        <div class="product-item">
+                            <div class="pi-pic">
+                            <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
+                            <div class="sale">Sale</div>
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active">
+                                <a href="#"><i class="icon_bag_alt"></i></a>
+                                </li>
+                                <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
+                                <li class="w-icon">
+                                <a href="#"><i class="fa fa-random"></i></a>
+                                </li>
+                            </ul>
+                            </div>
+                            <div class="pi-text">
+                            <div class="catagory-name">{{ $item->category }}</div>
+                            <a href="#">
+                                <h5>{{ $item->name }}</h5>
+                            </a>
+                            <div class="product-price">
+                                ${{ $item->price - 5 }}.00
+                                <span>${{ $item->price }}.00</span>
+                            </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
         </div>
