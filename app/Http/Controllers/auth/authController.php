@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\signinRequest;
 use App\Http\Requests\signupRequest;
 use App\Models\User;
+use App\Services\Interfaces\GeneralServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,16 +14,20 @@ use Illuminate\Support\Facades\Validator;
 
 class authController extends Controller
 {
-    public $basic = [
-        "shop_email"   => "uniform_shop@gmail.com",
-        "shop_number"  => "+65 11.188.888",
-        "shop_address" => "60-49 Road 11378 New York",
-    ];
+    protected $basic = [];
+    protected $generalService;
+
+    public function __construct(GeneralServiceInterface $generalService)
+    {
+        $this->generalService = $generalService;
+        $this->basic          = $this->generalService->basic_item();
+    }
 
     public function go_to_login()
     {
         return view("root.pages.login")->with([
             "basic"      => $this->basic,
+            "title"      => "login",
             "breadcrumb" => [["route" => "signin", "name" => "Sign In"]]]);
     }
 
@@ -30,6 +35,7 @@ class authController extends Controller
     {
         return view("root.pages.register")->with([
             "basic"      => $this->basic,
+            "title"      => "register",
             "breadcrumb" => [["route" => "signup", "name" => "Sign Up"]]]);
     }
 
@@ -45,7 +51,7 @@ class authController extends Controller
 
         User::create($create);
 
-        return redirect()->route("signin")->with("session_success", "Sign up success!");
+        return redirect()->route("signin")->with("session_success", "Register success!");
     }
 
     public function log_in_user(signinRequest $request)
@@ -57,12 +63,10 @@ class authController extends Controller
             $request->session()
                     ->regenerate();
 
-            return redirect()
-                    ->intended("/")
-                    ->with("session_success", "sign in was success!");
+            return redirect()->route("signin");
         }
 
-        return redirect()->back()->with("session_errors", "sign in was failed!");
+        return redirect()->back()->with("session_errors", "Login failed!");
     }
 
     public function log_out_user(Request $request)
