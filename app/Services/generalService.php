@@ -7,7 +7,7 @@ use App\Services\Interfaces\GeneralServiceInterface;
 
 class GeneralService implements GeneralServiceInterface {
 
-    public function basic_item()
+    public function basicItem()
     {
         $basic = [
             "shop_email"   => "uniform_shop@gmail.com",
