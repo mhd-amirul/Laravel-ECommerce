@@ -10,18 +10,20 @@ use Illuminate\Http\Request;
 class homeController extends Controller
 {
     protected $basic = [];
+    protected $product;
     protected $generalService;
 
     public function __construct(GeneralServiceInterface $generalService)
     {
         $this->generalService = $generalService;
         $this->basic          = $this->generalService->basicItem();
+        $this->product        = new Product();
     }
 
     public function goToIndex()
     {
-        $product  = Product::latest()->whereNot("discount", 50)->get();
-        $discount = Product::latest()->where("discount", 50)->get();
+        $product  = $this->product->latest()->where("discount", '<' ,50)->get();
+        $discount = $this->product->latest()->where("discount", '>=' ,50)->get();
 
         return view("root.pages.index")
             ->with([
@@ -34,17 +36,17 @@ class homeController extends Controller
 
     public function goToProduct()
     {
+        if (!request()->has("product"))
+            return redirect()->route("index");
+
+        $product = $this->product->where("id", request("product"))->first();
+        $related = $this->product->byCategory($this->product, explode(',', str_replace(' ', '', $product->category)))->get();
+
         return view("root.pages.product")->with([
             "basic"      => $this->basic,
             "title"      => "detail product",
+            "product"    => $product,
+            "related"    => $related,
             "breadcrumb" => [["route" => "product", "name" => "Detail Product"]]]);
-    }
-
-    public function goToShopCard()
-    {
-        return view("root.pages.shopping-cart")->with([
-            "basic"      => $this->basic,
-            "title"      => "shopping cart",
-            "breadcrumb" => [["route" => "shopping-card", "name" => "Shopping Cart"]]]);
     }
 }
