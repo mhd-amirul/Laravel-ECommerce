@@ -20,10 +20,10 @@ class authController extends Controller
     public function __construct(GeneralServiceInterface $generalService)
     {
         $this->generalService = $generalService;
-        $this->basic          = $this->generalService->basic_item();
+        $this->basic          = $this->generalService->basicItem();
     }
 
-    public function go_to_login()
+    public function goToLogin()
     {
         return view("root.pages.login")->with([
             "basic"      => $this->basic,
@@ -31,7 +31,7 @@ class authController extends Controller
             "breadcrumb" => [["route" => "signin", "name" => "Sign In"]]]);
     }
 
-    public function go_to_register()
+    public function goToRegister()
     {
         return view("root.pages.register")->with([
             "basic"      => $this->basic,
@@ -39,7 +39,7 @@ class authController extends Controller
             "breadcrumb" => [["route" => "signup", "name" => "Sign Up"]]]);
     }
 
-    public function create_user(signupRequest $request)
+    public function createUser(signupRequest $request)
     {
         $password = Hash::make($request->password);
 
@@ -51,10 +51,10 @@ class authController extends Controller
 
         User::create($create);
 
-        return redirect()->route("signin")->with("session_success", "Register success!");
+        return redirect()->route("signin")->with("session_success", "Sign Up success!");
     }
 
-    public function log_in_user(signinRequest $request)
+    public function logInUser(signinRequest $request)
     {
         $log        = [ "email" => $request->email, "password" => $request->pass ];
         $remember   = $request->has("remember") && $request->remember == "on" ? true : false;
@@ -63,17 +63,17 @@ class authController extends Controller
             $request->session()
                     ->regenerate();
 
-            return redirect()->route("signin");
+            return redirect()->route("index");
         }
 
-        return redirect()->back()->with("session_errors", "Login failed!");
+        return redirect()->back()->with("session_errors", "Sign In failed!");
     }
 
-    public function log_out_user(Request $request)
+    public function logOutUser(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route("signin")->with("session_success", "log out success!");
+        return redirect()->route("signin")->with("session_success", "Sign Out success!");
     }
 }
