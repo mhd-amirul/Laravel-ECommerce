@@ -15,10 +15,10 @@ class homeController extends Controller
     public function __construct(GeneralServiceInterface $generalService)
     {
         $this->generalService = $generalService;
-        $this->basic          = $this->generalService->basic_item();
+        $this->basic          = $this->generalService->basicItem();
     }
 
-    public function go_to_index()
+    public function goToIndex()
     {
         $product  = Product::latest()->whereNot("discount", 50)->get();
         $discount = Product::latest()->where("discount", 50)->get();
@@ -32,7 +32,7 @@ class homeController extends Controller
             ]);
     }
 
-    public function go_to_product()
+    public function goToProduct()
     {
         return view("root.pages.product")->with([
             "basic"      => $this->basic,
@@ -40,7 +40,7 @@ class homeController extends Controller
             "breadcrumb" => [["route" => "product", "name" => "Detail Product"]]]);
     }
 
-    public function go_to_shop_card()
+    public function goToShopCard()
     {
         return view("root.pages.shopping-cart")->with([
             "basic"      => $this->basic,
