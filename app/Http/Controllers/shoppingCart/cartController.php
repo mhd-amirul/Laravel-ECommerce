@@ -23,10 +23,13 @@ class cartController extends Controller
 
     public function goToShopCart()
     {
+        $shoppingCart = $this->shoppingCart->latest()->where("user_id", auth()->user()->id)->get();
+
         return view("root.pages.shopping-cart")->with([
-            "basic"      => $this->basic,
-            "title"      => "shopping cart",
-            "breadcrumb" => [["route" => "shopping-card", "name" => "Shopping Cart"]]]);
+            "basic"         => $this->basic,
+            "title"         => "shopping cart",
+            "shoppingCart"  => $shoppingCart,
+            "breadcrumb"    => [["route" => "shopping-card", "name" => "Shopping Cart"]]]);
     }
 
     public function insertCart(shoppingCartRequest $request)
