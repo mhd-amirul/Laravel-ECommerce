@@ -10,4 +10,9 @@ class Cart extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function products()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
 }
