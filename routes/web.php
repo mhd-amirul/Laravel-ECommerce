@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\authController;
 use App\Http\Controllers\home\homeController;
+use App\Http\Controllers\shoppingCart\cartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +29,5 @@ Route::group(["controller" => authController::class], function () {
 
 Route::get('/', [homeController::class, "goToIndex"])->name("index");
 Route::get('product', [homeController::class, "goToProduct"])->name("product");
-Route::get('shopping-card', [homeController::class, "goToShopCard"])->name("shopping-card");
+Route::get('shopping-cart', [cartController::class, "goToShopCart"])->name("shopping.cart");
+Route::post('insert-shopping-cart', [cartController::class, "insertCart"])->name("insert.cart");
