@@ -23,7 +23,7 @@
                 <br><br>
               @endif
               <div class="register-form">
-                <h2>Register</h2>
+                <h2>SIGN UP</h2>
                 <form action="{{ route("signup.create") }}" method="POST">
                   @csrf
                   @method("post")
@@ -44,11 +44,11 @@
                     <input type="text" id="con_pass" name="con_pass" />
                   </div>
                   <button type="submit" class="site-btn register-btn">
-                    REGISTER
+                    SIGN UP
                   </button>
                 </form>
                 <div class="switch-login">
-                  <a href="{{ route("signin") }}" class="or-login">Or Login</a>
+                  <a href="{{ route("signin") }}" class="or-login">Or Sign In</a>
                 </div>
               </div>
             </div>
