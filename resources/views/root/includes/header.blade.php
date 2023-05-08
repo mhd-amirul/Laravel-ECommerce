@@ -5,22 +5,22 @@
         <div class="ht-left">
           <div class="mail-service">
             <i class=" fa fa-envelope"></i>
-            {{ $basic["shop_email"] }}
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ $basic["shop_email"] }}" style="color: black;"> {{ $basic["shop_email"] }} </a>
           </div>
           <div class="phone-service">
             <i class=" fa fa-phone"></i>
-            {{ $basic["shop_number"] }}
+            <a href="tel:{{ $basic["shop_number"] }}" style="color: black;"> {{ $basic["shop_number"] }} </a>
           </div>
         </div>
         <div class="ht-right">
           @auth
             <form action="{{ route('signout') }}" method="POST" id="form__submit">
               @csrf
-              <a href="#" class="login-panel" onclick="submitForm()"><i class="fa fa-user"></i>Keluar</a>
+              <a class="login-panel" onclick="submitForm('form__submit')"><i class="fa fa-user"></i>Sign Out</a>
             </form>
           @endauth
           @guest
-            <a href="{{ route("signin") }}" class="login-panel"><i class="fa fa-user"></i>Masuk</a>
+            <a href="{{ route("signin") }}" class="login-panel"><i class="fa fa-user"></i>Sign In</a>
           @endguest
         </div>
       </div>
@@ -39,12 +39,13 @@
           <div class="col-lg-3 text-right col-md-3">
             <ul class="nav-right">
               <li class="cart-icon">
+                @auth  <a href="{{ route("shopping.cart") }}"> @endauth
+                @guest <a href="{{ route("signin")        }}"> @endguest
                 Keranjang Belanja &nbsp;
-                <a href="#">
                   <i class="icon_bag_alt"></i>
-                  <span>3</span>
+                  @auth <span></span> @endauth
                 </a>
-                <div class="cart-hover">
+                {{-- <div class="cart-hover">
                   @auth
                     <div class="select-items">
                       <table>
@@ -52,20 +53,6 @@
                           <tr>
                             <td class="si-pic">
                               <img src="{{ url('images/select-product-1.jpg') }}" alt="" />
-                            </td>
-                            <td class="si-text">
-                              <div class="product-selected">
-                                <p>$60.00 x 1</p>
-                                <h6>Kabino Bedside Table</h6>
-                              </div>
-                            </td>
-                            <td class="si-close">
-                              <i class="ti-close"></i>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="si-pic">
-                              <img src="{{ url('images/select-product-2.jpg') }}" alt="" />
                             </td>
                             <td class="si-text">
                               <div class="product-selected">
@@ -94,7 +81,7 @@
                       <a href="{{ route("signin") }}" class="primary-btn view-card">SIGN IN</a>
                     </div>
                   @endguest
-                </div>
+                </div> --}}
               </li>
             </ul>
           </div>
