@@ -27,7 +27,7 @@
                 <br><br>
             @endif
             <div class="login-form">
-            <h2>Login</h2>
+            <h2>SIGN IN</h2>
             <form action="{{ route("signin.check") }}" method="POST">
                 @csrf
                 @method("post")
