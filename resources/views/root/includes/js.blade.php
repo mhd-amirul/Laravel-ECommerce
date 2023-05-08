@@ -11,8 +11,8 @@
 <script src="{{ url('js/main.js') }}"></script>
 
 <script>
-    function submitForm() {
-        let form = document.getElementById("form__submit");
+    function submitForm(id) {
+        let form = document.getElementById(id);
         form.submit();
     }
 
