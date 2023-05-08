@@ -15,11 +15,16 @@
                             <span>{{ $item->category }}</span>
                             <h1>{{ $item->name }}</h1>
                             <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore
+                            <?php
+                                $description = $item->description;
+                                $description = (strlen($description) > 140) ? substr($description, 0, 140)."..." : $description;
+                            ?>
+                            {{ $description }} <a href="" style="color: black">see detail</a>
+                            {{-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                            do eiusmod tempor incididunt ut labore et dolore --}}
                             </p>
                             {{-- <p>{{ $item->description }}</p> --}}
-                            <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
+                            <a href="{{ route("product")."?product=".$item->id }}" class="primary-btn">Shop Now</a>
                         </div>
                         </div>
                         <div class="off-card">
@@ -29,42 +34,6 @@
                 </div>
             @endforeach
         @endif            
-        {{-- <div class="single-hero-items set-bg" data-setbg="{{ url('images/hero-1.jpg') }}">
-            <div class="container">
-                <div class="row">
-                <div class="col-lg-5">
-                    <span>Bag,kids</span>
-                    <h1>Black friday</h1>
-                    <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore
-                    </p>
-                    <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
-                </div>
-                </div>
-                <div class="off-card">
-                <h2>Sale <span>50%</span></h2>
-                </div>
-            </div>
-        </div>
-        <div class="single-hero-items set-bg" data-setbg="{{ url('images/hero-2.jpg') }}">
-            <div class="container">
-                <div class="row">
-                <div class="col-lg-5">
-                    <span>Bag,kids</span>
-                    <h1>Black friday</h1>
-                    <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore
-                    </p>
-                    <a href="{{ route("product") }}" class="primary-btn">Shop Now</a>
-                </div>
-                </div>
-                <div class="off-card">
-                <h2>Sale <span>50%</span></h2>
-                </div>
-            </div>
-        </div> --}}
     </div>
     </section>
     <!-- Hero Section End -->
@@ -84,14 +53,19 @@
                             <div class="icon">
                                 <i class="icon_heart_alt"></i>
                             </div>
+                            <form action="{{ route("insert.cart") }}" method="POST" id="insert__cart_index{{ $item->id }}" hidden>
+                                @csrf
+                                <input type="text" value="1" id="quantity" name="quantity"/>
+                                <input type="text" value="{{ $item->id }}" id="product_id" name="product_id"/>
+                            </form>
                             <ul>
                                 <li class="w-icon active">
-                                <a href="#"><i class="icon_bag_alt"></i></a>
+                                <a onclick="submitForm('insert__cart_index{{ $item->id }}')"><i class="icon_bag_alt"></i></a>
                                 </li>
-                                <li class="quick-view"><a href="{{ route("product") }}">+ Quick View</a></li>
-                                <li class="w-icon">
+                                <li class="quick-view"><a href="{{ route("product")."?product=".$item->id }}">+ Quick View</a></li>
+                                {{-- <li class="w-icon">
                                 <a href="#"><i class="fa fa-random"></i></a>
-                                </li>
+                                </li> --}}
                             </ul>
                             </div>
                             <div class="pi-text">
