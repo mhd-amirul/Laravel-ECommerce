@@ -19,60 +19,28 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="cart-pic first-row">
-                      <img src="{{ url('images/cart-page/product-1.jpg') }}" alt="" />
-                    </td>
-                    <td class="cart-title first-row">
-                      <h5>Pure Pineapple</h5>
-                    </td>
-                    <td class="p-price first-row">$60.00</td>
-                    <td class="qua-col first-row">
-                      <div class="quantity">
-                        <div class="pro-qty">
-                          <input type="text" value="1" />
-                        </div>
-                      </div>
-                    </td>
-                    <td class="total-price first-row">$60.00</td>
-                    <td class="close-td first-row"><i class="ti-close"></i></td>
-                  </tr>
-                  <tr>
-                    <td class="cart-pic">
-                      <img src="{{ url('images/cart-page/product-2.jpg') }}" alt="" />
-                    </td>
-                    <td class="cart-title">
-                      <h5>American lobster</h5>
-                    </td>
-                    <td class="p-price">$60.00</td>
-                    <td class="qua-col">
-                      <div class="quantity">
-                        <div class="pro-qty">
-                          <input type="text" value="1" />
-                        </div>
-                      </div>
-                    </td>
-                    <td class="total-price">$60.00</td>
-                    <td class="close-td"><i class="ti-close"></i></td>
-                  </tr>
-                  <tr>
-                    <td class="cart-pic">
-                      <img src="{{ url('images/cart-page/product-3.jpg') }}" alt="" />
-                    </td>
-                    <td class="cart-title">
-                      <h5>Guangzhou sweater</h5>
-                    </td>
-                    <td class="p-price">$60.00</td>
-                    <td class="qua-col">
-                      <div class="quantity">
-                        <div class="pro-qty">
-                          <input type="text" value="1" />
-                        </div>
-                      </div>
-                    </td>
-                    <td class="total-price">$60.00</td>
-                    <td class="close-td"><i class="ti-close"></i></td>
-                  </tr>
+                  @if ( isset($shoppingCart) )
+                      @foreach ($shoppingCart as $item)
+                        <tr>
+                          <td class="cart-pic {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                            <img src="{{ asset('storage/'.$item->products->image) }}" alt="" width="170" height="170"/>
+                          </td>
+                          <td class="cart-title {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                            <h5>{{ $item->products->name }}</h5>
+                          </td>
+                          <td class="p-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price }}.00</td>
+                          <td class="qua-col {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                            <div class="quantity">
+                              <div class="pro-qty">
+                                <input type="text" value="{{ $item->quantity }}" />
+                              </div>
+                            </div>
+                          </td>
+                          <td class="total-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price * $item->quantity }}.00</td>
+                          <td class="close-td {{ $loop->iteration == 1 ? 'first-row' : ''; }}"><i class="ti-close"></i></td>
+                        </tr>
+                      @endforeach
+                  @endif
                 </tbody>
               </table>
             </div>
