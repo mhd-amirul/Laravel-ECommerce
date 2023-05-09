@@ -23,35 +23,32 @@ class cartController extends Controller
 
     public function goToShopCart()
     {
-        $shoppingCart = $this->shoppingCart->latest()->where("user_id", auth()->user()->id)->get();
-
         return view("root.pages.shopping-cart")->with([
             "basic"         => $this->basic,
             "title"         => "shopping cart",
-            "shoppingCart"  => $shoppingCart,
+            "shoppingCart"  => $this->shoppingCart->latest()->where("user_id", auth()->user()->id)->get(),
             "breadcrumb"    => [["route" => "shopping-card", "name" => "Shopping Cart"]]]);
     }
 
     public function insertCart(shoppingCartRequest $request)
     {
 
-        $user_id = auth()->user()->id;
+        if ($request->quantity == 0) return redirect()->back();
 
         $shoppingCart = $this->shoppingCart
-            ->where("user_id",    $user_id)
+            ->where("user_id",    auth()->user()->id)
             ->where("product_id", $request->product_id)
             ->first();
 
         if ( !empty($shoppingCart) ) {
-            dd($request->quantity + $shoppingCart->quantity);
             $shoppingCart = $shoppingCart->update([ "quantity" => $request->quantity + $shoppingCart->quantity ]);
 
             if ( $shoppingCart ) 
-                return redirect()->back(); 
+                return redirect()->route("shopping.cart"); 
         }
 
         $shoppingCart = [
-            "user_id"     => $user_id,
+            "user_id"     => auth()->user()->id,
             "product_id"  => $request->product_id,
             "quantity"    => $request->quantity,
         ];
@@ -59,7 +56,29 @@ class cartController extends Controller
         $shoppingCart = $this->shoppingCart->create($shoppingCart);
 
         if ( $shoppingCart )
-            return redirect()->back();
+            return redirect()->route("shopping.cart");
+    }
+
+    public function updateCart(shoppingCartRequest $request)
+    {
+        $shoppingCart = $this->shoppingCart
+            ->where("user_id",    auth()->user()->id)
+            ->where("product_id", $request->product_id)
+            ->first();
+
+        if ( !empty($shoppingCart) ) {
+            if ($request->quantity == 0) {
+                $shoppingCart->delete();
+                return redirect()->route("shopping.cart");
+            }
+
+            $shoppingCart = $shoppingCart->update([ "quantity" => $request->quantity ]);
+
+            if ( $shoppingCart ) 
+                return redirect()->route("shopping.cart"); 
+        }
+
+        return redirect()->route("shopping.cart");
     }
 
 }
