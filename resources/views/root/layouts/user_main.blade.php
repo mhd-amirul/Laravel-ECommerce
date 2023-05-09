@@ -19,6 +19,7 @@
       @yield('content')
     </div>
 
+    @stack('form')
     @stack('partner')
     @stack('footer')
 
