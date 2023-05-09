@@ -19,7 +19,7 @@
                                 $description = $item->description;
                                 $description = (strlen($description) > 140) ? substr($description, 0, 140)."..." : $description;
                             ?>
-                            {{ $description }} <a href="" style="color: black">see detail</a>
+                            {{ $description }} <a href="{{ route("product")."?product=".$item->id }}" style="color: black">see detail</a>
                             {{-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
                             do eiusmod tempor incididunt ut labore et dolore --}}
                             </p>
@@ -53,14 +53,9 @@
                             <div class="icon">
                                 <i class="icon_heart_alt"></i>
                             </div>
-                            <form action="{{ route("insert.cart") }}" method="POST" id="insert__cart_index{{ $item->id }}" hidden>
-                                @csrf
-                                <input type="text" value="1" id="quantity" name="quantity"/>
-                                <input type="text" value="{{ $item->id }}" id="product_id" name="product_id"/>
-                            </form>
                             <ul>
                                 <li class="w-icon active">
-                                <a onclick="submitForm('insert__cart_index{{ $item->id }}')"><i class="icon_bag_alt"></i></a>
+                                <a onclick="insertCart('{{ $item->id }}', 'null')"><i class="icon_bag_alt"></i></a>
                                 </li>
                                 <li class="quick-view"><a href="{{ route("product")."?product=".$item->id }}">+ Quick View</a></li>
                                 {{-- <li class="w-icon">
@@ -129,6 +124,14 @@
     </div>
     <!-- Instagram Section End -->
 @endsection
+
+@push('form')
+  <form action="{{ route("insert.cart") }}" method="POST" id="insertCartToDB" hidden>
+    @csrf
+    <input type="text"  id="quantityOfProduct"  name="quantity"/>
+    <input type="text"  id="productIdOfProduct" name="product_id"/>
+  </form>
+@endpush
 
 @push('footer')
     @include('root.includes.partner')
