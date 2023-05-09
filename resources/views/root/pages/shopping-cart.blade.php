@@ -19,6 +19,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <?php $total = 0; $subTotal = 0; ?>
                   @if ( isset($shoppingCart) )
                       @foreach ($shoppingCart as $item)
                         <tr>
@@ -29,16 +30,20 @@
                             <h5>{{ $item->products->name }}</h5>
                           </td>
                           <td class="p-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price }}.00</td>
-                          <td class="qua-col {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                          <td class="p-price text-dark {{ $loop->iteration == 1 ? 'first-row' : ''; }}">{{ $item->quantity }}</td>
+                          {{-- <td class="qua-col {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
                             <div class="quantity">
                               <div class="pro-qty">
                                 <input type="text" value="{{ $item->quantity }}" />
                               </div>
                             </div>
-                          </td>
+                          </td> --}}
                           <td class="total-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price * $item->quantity }}.00</td>
-                          <td class="close-td {{ $loop->iteration == 1 ? 'first-row' : ''; }}"><i class="ti-close"></i></td>
+                          <td class="close-td {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="text-decoration-none text-dark" onclick="getDataCart('{{ $item->products->id }}', '{{ $item->products->name }}', '{{ $item->quantity }}')"><i class="ti-close"></i></a>
+                          </td>
                         </tr>
+                        <?php $total += $item->products->price * $item->quantity; $subTotal += $item->products->price * $item->quantity; ?>
                       @endforeach
                   @endif
                 </tbody>
@@ -48,8 +53,8 @@
               <div class="col-lg-4 offset-lg-4">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="subtotal">Subtotal <span>$240.00</span></li>
-                    <li class="cart-total">Total <span>$240.00</span></li>
+                    <li class="subtotal">Subtotal <span>${{ $subTotal }}.00</span></li>
+                    <li class="cart-total">Total <span>${{ $total }}.00</span></li>
                   </ul>
                   <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
                 </div>
@@ -62,3 +67,50 @@
     <!-- Shopping Cart Section End -->
 
 @endsection
+
+@push('form')
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">change quantity or remove</h5>
+          </div>
+          <div class="modal-body">
+            
+            <div class="row">
+              <div class="col">
+                <div class="product-details">
+                  <div class="pd-title">
+                    <h3 id="dataName">#dataName</h3>
+                    <input type="text" value="null" id="productIdUpdate" hidden/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="product-details">
+                  <div class="quantity mb-0 ms-3">
+                    <div class="pro-qty">
+                      <input type="text" value="1" id="valueOfcart"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+            <button type="button" class="btn btn-primary" onclick="updateCart('productIdUpdate', 'valueOfcart')">change</button>
+            <button type="button" class="btn btn-danger" onclick="updateCart('productIdUpdate', 'valueOfcart', 'remove')">remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form action="{{ route("update.cart") }}" method="POST" id="updateCartToDB" hidden>
+      @csrf
+      <input type="text"  id="quantityOfProduct"  name="quantity"/>
+      <input type="text"  id="productIdOfProduct" name="product_id"/>
+    </form>
+@endpush
