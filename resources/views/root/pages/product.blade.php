@@ -55,14 +55,9 @@
                   </div>
                   <div class="quantity">
                     <div class="pro-qty">
-                      <input type="text" value="1" />
-                      <form action="{{ route("insert.cart") }}" method="POST" id="insert__cart" hidden>
-                        @csrf
-                        <input type="text" value="1" id="quantity" name="quantity"/>
-                        <input type="text" value="{{ $product->id }}" id="product_id" name="product_id"/>
-                      </form>
+                      <input type="text" value="1" id="valueOfcart"/>
                     </div>
-                    <a class="primary-btn pd-cart" onclick="submitForm('insert__cart')">Add To Cart</a>
+                    <a class="primary-btn pd-cart" onclick="insertCart('{{ $product->id }}', 'valueOfcart')">Add To Cart</a>
                   </div>
                 </div>
               </div>
@@ -84,7 +79,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12 col-sm-5">
+          <div class="col-12 col-5">
             <div class="product-slider owl-carousel">
               @if (isset($related))
                   @foreach ($related as $item)
@@ -95,14 +90,9 @@
                         <div class="icon">
                             <i class="icon_heart_alt"></i>
                         </div>
-                        <form action="{{ route("insert.cart") }}" method="POST" id="insert__cart_related{{ $item->id }}" hidden>
-                          @csrf
-                          <input type="text" value="1" id="quantity" name="quantity"/>
-                          <input type="text" value="{{ $item->id }}" id="product_id" name="product_id"/>
-                      </form>
                         <ul>
                             <li class="w-icon active">
-                            <a onclick="submitForm('insert__cart_related{{ $item->id }}')"><i class="icon_bag_alt"></i></a>
+                            <a onclick="insertCart('{{ $item->id }}', 'null')"><i class="icon_bag_alt"></i></a>
                             </li>
                             <li class="quick-view"><a href="{{ route("product")."?product=".$item->id }}">+ Quick View</a></li>
                             {{-- <li class="w-icon">
@@ -158,6 +148,14 @@
     <!-- Related Products Section End -->
 
 @endsection
+
+@push('form')
+  <form action="{{ route("insert.cart") }}" method="POST" id="insertCartToDB" hidden>
+    @csrf
+    <input type="text"  id="quantityOfProduct"  name="quantity"/>
+    <input type="text"  id="productIdOfProduct" name="product_id"/>
+  </form>
+@endpush
 
 @push('footer')
     @include('root.includes.partner')
