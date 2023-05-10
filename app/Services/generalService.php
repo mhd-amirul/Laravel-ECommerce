@@ -10,9 +10,9 @@ class GeneralService implements GeneralServiceInterface {
     public function basicItem()
     {
         $basic = [
-            "shop_email"   => "uniform_shop@gmail.com",
-            "shop_number"  => "+65 11.188.888",
-            "shop_address" => "60-49 Road 11378 New York",
+            "shop_email"   => "Fashi.@gmail.com",
+            "shop_number"  => "+62 810 2010 2020",
+            "shop_address" => "Denpasar, Bali",
             "partner"      => Resource::where("group", "partner")->get()
         ];
 

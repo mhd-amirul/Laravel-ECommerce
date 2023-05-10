@@ -25,7 +25,6 @@
             <h5>Information</h5>
             <ul>
               <li><a href="#">About Us</a></li>
-              <li><a href="#">Checkout</a></li>
               <li><a href="#">Contact</a></li>
               <li><a href="#">Service</a></li>
             </ul>
@@ -36,9 +35,7 @@
             <h5>My Account</h5>
             <ul>
               <li><a href="#">My Account</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="#">Shopping Cart</a></li>
-              <li><a href="#">Shop</a></li>
+              <li><a href="{{ route('shopping.cart') }}">Shopping Cart</a></li>
             </ul>
           </div>
         </div>

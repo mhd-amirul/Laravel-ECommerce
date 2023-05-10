@@ -37,11 +37,11 @@
                   </div>
                   <div class="group-input">
                     <label for="pass">Password *</label>
-                    <input type="text" id="pass" name="pass" />
+                    <input type="password" id="pass" name="pass" />
                   </div>
                   <div class="group-input">
                     <label for="con_pass">Confirm Password *</label>
-                    <input type="text" id="con_pass" name="con_pass" />
+                    <input type="password" id="con_pass" name="con_pass" />
                   </div>
                   <button type="submit" class="site-btn register-btn">
                     SIGN UP
