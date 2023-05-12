@@ -33,31 +33,77 @@
                   <div class="pd-title">
                     <span>{{ $product->category }}</span>
                     <h3>{{ $product->name }}</h3>
-                    <a href="#" class="heart-icon"
+                    {{-- <a onclick="likeItem('{{ $product->id }}')" class="heart-icon"
                       ><i class="icon_heart_alt"></i
-                    ></a>
+                    ></a> --}}
                   </div>
                   <div class="pd-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <span>(5)</span>
+                    @if ($product->rating)
+                      @if ($product->rating >= 1)
+                          <i class="fa fa-star"></i>
+                      @elseif ($product->rating >= 0.5)
+                          <i class="fa fa-star-half-o"></i>
+                      @else
+                          <i class="fa fa-star-o"></i>
+                      @endif
+
+                      @if ($product->rating >= 2)
+                          <i class="fa fa-star"></i>
+                      @elseif ($product->rating >= 1.5)
+                          <i class="fa fa-star-half-o"></i>
+                      @else
+                          <i class="fa fa-star-o"></i>
+                      @endif
+
+                      @if ($product->rating >= 3)
+                          <i class="fa fa-star"></i>
+                      @elseif ($product->rating >= 2.5)
+                          <i class="fa fa-star-half-o"></i>
+                      @else
+                          <i class="fa fa-star-o"></i>
+                      @endif
+
+                      @if ($product->rating >= 4)
+                          <i class="fa fa-star"></i>
+                      @elseif ($product->rating >= 3.5)
+                          <i class="fa fa-star-half-o"></i>
+                      @else
+                          <i class="fa fa-star-o"></i>
+                      @endif
+
+                      @if ($product->rating >= 5)
+                          <i class="fa fa-star"></i>
+                      @elseif ($product->rating >= 4.5)
+                          <i class="fa fa-star-half-o"></i>
+                      @else
+                          <i class="fa fa-star-o"></i>
+                      @endif
+                      <span>{{ " (".$product->rating.")" }}</span>
+                    @else
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <span>(5)</span>
+                    @endif
                   </div>
                   <div class="pd-desc">
                     <p>
                       {{ $product->description }}
                     </p>
-                    <h4>${{ $product->price }}.00 
-                      {{-- <span>629.99</span> --}}
-                    </h4>
+                    <?php $product->discount != 0 ? $price = $product->price - ($product->price * ($product->discount / 100)) : null; ?>
+                    @if ($product->discount == 0)
+                      <h4>${{ $product->price }}.00</h4>
+                    @else
+                      <h4> ${{ $price }}.00 <span> ${{ $product->price }}.00 </span> </h4>
+                    @endif
                   </div>
                   <div class="quantity">
                     <div class="pro-qty">
                       <input type="text" value="1" id="valueOfcart"/>
                     </div>
-                    <a class="primary-btn pd-cart" onclick="insertCart('{{ $product->id }}', 'valueOfcart')">Add To Cart</a>
+                    <a class="primary-btn pd-cart" onclick="shoppingCart('{{ $product->id }}', 'valueOfcart', 'change2')">Add To Cart</a>
                   </div>
                 </div>
               </div>
@@ -87,12 +133,12 @@
                         <div class="pi-pic">
                         <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
                         <div class="sale">Sale</div>
-                        <div class="icon">
-                            <i class="icon_heart_alt"></i>
-                        </div>
+                        {{-- <div class="icon">
+                            <a class="heart-icon"><i class="icon_heart_alt"></i></a>
+                        </div> --}}
                         <ul>
                             <li class="w-icon active">
-                            <a onclick="insertCart('{{ $item->id }}', 'null')"><i class="icon_bag_alt"></i></a>
+                            <a onclick="shoppingCart('{{ $item->id }}', '', 'addOne')"><i class="icon_bag_alt"></i></a>
                             </li>
                             <li class="quick-view"><a href="{{ route("product")."?product=".$item->id }}">+ Quick View</a></li>
                             {{-- <li class="w-icon">
@@ -101,14 +147,18 @@
                         </ul>
                         </div>
                         <div class="pi-text">
-                        <div class="catagory-name">{{ $item->category }}</div>
-                        <a href="#">
-                            <h5>{{ $item->name }}</h5>
-                        </a>
-                        <div class="product-price">
-                            ${{ $item->price - 5 }}.00
-                            <span>${{ $item->price }}.00</span>
-                        </div>
+                          <div class="catagory-name">{{ $item->category }}</div>
+                          <a href="#">
+                              <h5>{{ $item->name }}</h5>
+                          </a>
+                          <div class="product-price">
+                            <?php $item->discount != 0 ? $price = $item->price - ($item->price * ($item->discount / 100)) : null; ?>
+                            @if ($item->discount == 0)
+                              ${{ $item->price }}.00
+                            @else
+                              ${{ $price }}.00 <span> ${{ $item->price }}.00 </span>
+                            @endif
+                          </div>
                         </div>
                     </div>
                   @endforeach
@@ -150,7 +200,7 @@
 @endsection
 
 @push('form')
-  <form action="{{ route("insert.cart") }}" method="POST" id="insertCartToDB" hidden>
+  <form action="{{ route("shopping.cart.action") }}" method="POST" id="shoppingCart" hidden>
     @csrf
     <input type="text"  id="quantityOfProduct"  name="quantity"/>
     <input type="text"  id="productIdOfProduct" name="product_id"/>
