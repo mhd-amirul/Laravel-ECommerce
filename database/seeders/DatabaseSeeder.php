@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Product;
+use App\Models\Rating;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -63,6 +64,43 @@ class DatabaseSeeder extends Seeder
             "type"  => "image",
             "group" => "partner",
             "uri"   => "resources/images/partner/logo-5.png"
+        ]);
+
+        Resource::create([
+            "name"  => "insta-1",
+            "type"  => "image",
+            "group" => "instagram",
+            "uri"   => "resources/images/instagram/insta-1.jpg"
+        ]);
+        Resource::create([
+            "name"  => "insta-2",
+            "type"  => "image",
+            "group" => "instagram",
+            "uri"   => "resources/images/instagram/insta-2.jpg"
+        ]);
+        Resource::create([
+            "name"  => "insta-3",
+            "type"  => "image",
+            "group" => "instagram",
+            "uri"   => "resources/images/instagram/insta-3.jpg"
+        ]);
+        Resource::create([
+            "name"  => "insta-4",
+            "type"  => "image",
+            "group" => "instagram",
+            "uri"   => "resources/images/instagram/insta-4.jpg"
+        ]);
+        Resource::create([
+            "name"  => "insta-5",
+            "type"  => "image",
+            "group" => "instagram",
+            "uri"   => "resources/images/instagram/insta-5.jpg"
+        ]);
+        Resource::create([
+            "name"  => "insta-6",
+            "type"  => "image",
+            "group" => "instagram",
+            "uri"   => "resources/images/instagram/insta-6.jpg"
         ]);
 
         Product::create([
@@ -186,6 +224,13 @@ class DatabaseSeeder extends Seeder
             "category"      => "Cloth, Man, Kid, Stylish",
             "image"         => "resources/images/products/hero-2.jpg",
             "discount"      => 50
+        ]);
+
+        Rating::create([
+            "user_id" => 1,
+            "product_id" => 1,
+            "rating" => 1,
+            "komentar" => "mntp"
         ]);
     }
 }
