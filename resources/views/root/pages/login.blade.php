@@ -37,7 +37,7 @@
                 </div>
                 <div class="group-input">
                     <label for="pass">Password *</label>
-                    <input type="text" id="pass" name="pass"/>
+                    <input type="password" id="pass" name="pass"/>
                 </div>
                 <div class="group-input gi-check">
                     <div class="gi-more">
@@ -46,7 +46,7 @@
                             <input type="checkbox" id="save-pass" name="remember" />
                             <span class="checkmark"></span>
                         </label>
-                        <a href="#" class="forget-pass">Forget your Password</a>
+                        <a href="#" class="forget-pass" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Forget your Password</a>
                     </div>
                 </div>
                 <button type="submit" class="site-btn login-btn">
@@ -65,6 +65,32 @@
     </div>
     <!-- Register Form Section End -->
 @endsection
+
+@push('form')
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Reset Password</h5>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('forget.pass') }}" method="POST" id="forgetPassword">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Email Address:</label>
+                        <input type="text" class="form-control" id="email" name="email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitForm('forgetPassword')">send</button>
+            </div>
+            </div>
+        </div>
+        </div>
+@endpush
 
 @push('footer')
     @include('root.includes.partner')
