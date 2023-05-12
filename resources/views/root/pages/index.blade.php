@@ -40,93 +40,72 @@
 
     <!-- Women Banner Section Begin -->
     <section class="women-banner spad">
-    <div class="container-fluid">
-        <div class="row">
-        <div class="col-lg-12 mt-5">
-            <div class="product-slider owl-carousel">
-                @if (isset($products))
-                    @foreach ($products as $item)
-                        <div class="product-item">
-                            <div class="pi-pic">
-                            <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
-                            <div class="sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-lg-12 mt-5">
+                <div class="product-slider owl-carousel">
+                    @if (isset($products))
+                        @foreach ($products as $item)
+                            <div class="product-item">
+                                <div class="pi-pic">
+                                <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
+                                <div class="sale">Sale</div>
+                                {{-- <div class="icon">
+                                    <i class="icon_heart_alt"></i>
+                                </div> --}}
+                                <ul>
+                                    <li class="w-icon active">
+                                    <a onclick="shoppingCart('{{ $item->id }}', '', 'addOne')"><i class="icon_bag_alt"></i></a>
+                                    </li>
+                                    <li class="quick-view"><a href="{{ route("product")."?product=".$item->id }}">+ Quick View</a></li>
+                                    {{-- <li class="w-icon">
+                                    <a href="#"><i class="fa fa-random"></i></a>
+                                    </li> --}}
+                                </ul>
+                                </div>
+                                <div class="pi-text">
+                                <div class="catagory-name">{{ $item->category }}</div>
+                                <a href="#">
+                                    <h5>{{ $item->name }}</h5>
+                                </a>
+                                <div class="product-price">
+                                    <?php $item->discount != 0 ? $price = $item->price - ($item->price * ($item->discount / 100)) : null; ?>
+                                    @if ($item->discount == 0)
+                                        ${{ $item->price }}.00
+                                    @else
+                                        ${{ $price }}.00
+                                        <span>${{ $item->price }}.00</span>
+                                    @endif
+                                </div>
+                                </div>
                             </div>
-                            <ul>
-                                <li class="w-icon active">
-                                <a onclick="insertCart('{{ $item->id }}', 'null')"><i class="icon_bag_alt"></i></a>
-                                </li>
-                                <li class="quick-view"><a href="{{ route("product")."?product=".$item->id }}">+ Quick View</a></li>
-                                {{-- <li class="w-icon">
-                                <a href="#"><i class="fa fa-random"></i></a>
-                                </li> --}}
-                            </ul>
-                            </div>
-                            <div class="pi-text">
-                            <div class="catagory-name">{{ $item->category }}</div>
-                            <a href="#">
-                                <h5>{{ $item->name }}</h5>
-                            </a>
-                            <div class="product-price">
-                                ${{ $item->price - 5 }}.00
-                                <span>${{ $item->price }}.00</span>
-                            </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
+                        @endforeach
+                    @endif
+                </div>
+            </div>
             </div>
         </div>
-        </div>
-    </div>
     </section>
     <!-- Women Banner Section End -->
 
     <!-- Instagram Section Begin -->
     <div class="instagram-photo">
-        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-1.jpg') }}">
-            <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-2.jpg') }}">
-            <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-3.jpg') }}">
-            <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-4.jpg') }}">
-            <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-5.jpg') }}">
-            <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
-        <div class="insta-item set-bg" data-setbg="{{ url('images/insta-6.jpg') }}">
-            <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-            </div>
-        </div>
+        @if (isset($instagram))
+            @foreach ($instagram as $item)
+                <div class="insta-item set-bg" data-setbg="{{ asset('storage/'.$item->uri) }}">
+                    <div class="inside-text">
+                    <i class="ti-instagram"></i>
+                    <h5><a href="#">colorlib_Collection</a></h5>
+                    </div>
+                </div>
+            @endforeach
+        @endif
     </div>
     <!-- Instagram Section End -->
 @endsection
 
 @push('form')
-  <form action="{{ route("insert.cart") }}" method="POST" id="insertCartToDB" hidden>
+  <form action="{{ route("shopping.cart.action") }}" method="POST" id="shoppingCart" hidden>
     @csrf
     <input type="text"  id="quantityOfProduct"  name="quantity"/>
     <input type="text"  id="productIdOfProduct" name="product_id"/>
