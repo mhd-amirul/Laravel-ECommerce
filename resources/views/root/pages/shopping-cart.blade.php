@@ -27,7 +27,7 @@
                             <img src="{{ asset('storage/'.$item->products->image) }}" alt="" width="170" height="170"/>
                           </td>
                           <td class="cart-title {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
-                            <h5>{{ $item->products->name }}</h5>
+                            <a href="{{ route('product')."?product=".$item->products->id }}" class="text-dark"><h5>{{ $item->products->name }}</h5></a>
                           </td>
                           <td class="p-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price }}.00</td>
                           <td class="p-price text-dark {{ $loop->iteration == 1 ? 'first-row' : ''; }}">{{ $item->quantity }}</td>
@@ -49,23 +49,23 @@
                 </tbody>
               </table>
             </div>
-            <div class="row">
-              <div class="col-lg-4 offset-lg-4">
-                <div class="proceed-checkout">
-                  <ul>
-                    <li class="subtotal">Subtotal <span>${{ $subTotal }}.00</span></li>
-                    <li class="cart-total">Total <span>${{ $total }}.00</span></li>
-                  </ul>
-                  <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
+              <div class="row">
+                {{-- <div class="row" @if ($total == 0) hidden @endif> --}}
+                <div class="col-lg-4 offset-lg-4">
+                  <div class="proceed-checkout">
+                    <ul>
+                      <li class="subtotal">Subtotal <span>${{ $subTotal }}.00</span></li>
+                      <li class="cart-total">Total <span>${{ $total }}.00</span></li>
+                    </ul>
+                    <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
     </section>
     <!-- Shopping Cart Section End -->
-
 @endsection
 
 @push('form')
@@ -101,14 +101,14 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-            <button type="button" class="btn btn-primary" onclick="updateCart('productIdUpdate', 'valueOfcart')">change</button>
-            <button type="button" class="btn btn-danger" onclick="updateCart('productIdUpdate', 'valueOfcart', 'remove')">remove</button>
+            <button type="button" class="btn btn-primary" onclick="shoppingCart('productIdUpdate', 'valueOfcart', 'change')">change</button>
+            <button type="button" class="btn btn-danger" onclick="shoppingCart('productIdUpdate', 'valueOfcart', 'remove')">remove</button>
           </div>
         </div>
       </div>
     </div>
 
-    <form action="{{ route("update.cart") }}" method="POST" id="updateCartToDB" hidden>
+    <form action="{{ route("shopping.cart.action") }}" method="POST" id="shoppingCart" hidden>
       @csrf
       <input type="text"  id="quantityOfProduct"  name="quantity"/>
       <input type="text"  id="productIdOfProduct" name="product_id"/>
