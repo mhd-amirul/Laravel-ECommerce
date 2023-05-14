@@ -10,6 +10,7 @@ use App\Http\Requests\signupRequest;
 use App\Mail\resetPaswordMail;
 use App\Models\PasswordReset;
 use App\Models\User;
+use App\Services\Interfaces\AuthServiceInterface;
 use App\Services\Interfaces\GeneralServiceInterface;
 use Carbon\Carbon;
 use DateTime;
@@ -24,11 +25,13 @@ class authController extends Controller
 {
     protected $basic = [];
     protected $generalService;
+    protected $authService;
 
-    public function __construct(GeneralServiceInterface $generalService)
+    public function __construct(GeneralServiceInterface $generalService, AuthServiceInterface $authService)
     {
-        $this->generalService = $generalService;
-        $this->basic          = $this->generalService->basicItem();
+        $this->generalService   = $generalService;
+        $this->authService      = $authService;
+        $this->basic            = $this->generalService->basicItem();
     }
 
     public function goToLogin()
@@ -50,54 +53,38 @@ class authController extends Controller
     public function goToResetPassword()
     {
         if (request()->has("code")) {
-            $code = PasswordReset::where("forget_password_code", request("code"))->first();
+            $code = $this->authService->checkResetPasswordCode(request("code"));
 
             if ($code) {
-                $user = User::where("id", $code->user_id)->exists();
-
-                if ($user) {
-                    if (!Carbon::now()->diff(new Carbon($code->expired_code))->invert) {
-                        return view('root.pages.reset-password')->with([
-                            "code"      => $code->forget_password_code,
-                            "user_id"   => $code->user_id
-                        ]);
-                    }
-    
-                    $code->delete();
-                    return redirect()->route("signin")->with("session_errors", "url expired!");
-                }
+                return view('root.pages.reset-password')->with([
+                    "code"      => $code->forget_password_code,
+                    "user_id"   => $code->user_id
+                ]);
             }
+
+            return redirect()->route("signin")->with("session_errors", "url expired!");
         }
         return redirect()->route("signin")->with("session_errors", "failed!");
     }
 
-    public function createUser(signupRequest $request)
+    public function signUpUser(signupRequest $request)
     {
-        $create = [
-            "email"    => $request->email,
-            "name"     => $request->name,
-            "password" => Hash::make($request->pass),
-        ];
+        $user = $this->authService->signUp($request->email, $request->name, $request->pass);
 
-        User::create($create);
+        $message["status" ] = $user ? "session_success"  : "session_errors";
+        $message["message"] = $user ? "Sign Up success!" : "failed!";
 
-        return redirect()->route("signin")->with("session_success", "Sign Up success!");
+        return redirect()->route("signin")->with($message["status"], $message["message"]);
     }
 
-    public function logInUser(signinRequest $request)
+    public function signInUser(signinRequest $request)
     {
-        // dd(Hash::make($request->pass));
-        $log        = [ "email" => $request->email, "password" => $request->pass ];
-        $remember   = $request->has("remember") && $request->remember == "on" ? true : false;
+        $user = $this->authService->signIn($request);
 
-        if (Auth::attempt($log, $remember)) {
-            $request->session()
-                    ->regenerate();
+        if ($user)
+            return redirect()->route("index")->with("session_success", "Sign In success!");
 
-            return redirect()->route("index");
-        }
-
-        return redirect()->back()->with("session_errors", "Sign In failed!");
+        return redirect()->back()->with("session_errors", "failed!");
     }
 
     public function logOutUser(Request $request)
@@ -108,56 +95,23 @@ class authController extends Controller
         return redirect()->route("signin")->with("session_success", "Sign Out success!");
     }
 
-    public function forgetPassword(forgetPasswordRequest $request)
+    public function forgetPasswordUser(forgetPasswordRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = $this->authService->forgetPassword($request->email);
 
-        if ($user) {
-            $toDB = [
-                "forget_password_code"    => Hash::make($request->email.Carbon::now()->format("Y-m-d H:i:s")),
-                "expired_code"            => Carbon::now()->addHours(24)->format("Y-m-d H:i:s"),
-            ];
+        $message["status" ] = $user ? "session_success"  : "session_errors";
+        $message["message"] = $user ? "email was sent!"  : "failed!";
 
-            $passReset  = new PasswordReset();
-            $codeReset  = $passReset->where("user_id", $user->id)->first();
-            $response   = null;
-
-            if ($codeReset) {
-                $response = $codeReset->update($toDB);
-            } else {
-                $toDB["user_id"]    = $user->id;
-                $response           = $passReset->create($toDB);
-            }
-
-            if ($response) {
-                Mail::to($user->email)
-                    ->send(new resetPaswordMail([
-                        "email" => $user->email,
-                        "name"  => $user->name,
-                        "uri"   => route('forget.pass.part2')."?code=".$toDB["forget_password_code"]
-                ]));
-
-                return redirect()->back()->with("session_success", "email was sent!");
-            }
-        }
-
-        return redirect()->back()->with("session_errors", "failed!");
+        return redirect()->back()->with($message["status"], $message["message"]);
     }
 
-    public function resetPassword(resetPasswordRequest $request)
+    public function resetPasswordUser(resetPasswordRequest $request)
     {
-        $code = PasswordReset::where("forget_password_code", $request->code)->first();
+        $code = $this->authService->resetPassword($request->code, $request->pass);
+        
+        $message["status" ] = $code ? "session_success"        : "session_errors";
+        $message["message"] = $code ? "password has changed!"  : "failed!";
 
-        if ($code) {
-            $user = User::where("id", $code->user_id)->first();
-
-            if ($user) {
-                $user->update(["password" => Hash::make($request->pass)]);
-                $code->delete();
-                return redirect()->route("signin")->with("session_success", "password has changed!");
-            }
-        }
-
-        return redirect()->route("signin")->with("session_errors", "failed!");
+        return redirect()->route("signin")->with($message["status"], $message["message"]);
     }
 }
