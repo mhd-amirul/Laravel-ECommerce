@@ -11,6 +11,11 @@ class Product extends Model
 
     protected $guarded = [ "id" ];
 
+    public function Ratings()
+    {
+        return $this->hasMany(Rating::class, "product_id", "id");
+    }
+
     public function byCategory($query, array $filters)
     {
         if (isset($filters) ? $filters : false) {
