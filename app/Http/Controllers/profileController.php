@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\updateProfileRequest;
 use App\Models\User;
 use App\Services\Interfaces\GeneralServiceInterface;
+use App\Services\Interfaces\ProfileServiceInterface;
 use Illuminate\Http\Request;
 
 class profileController extends Controller
 {
-    protected $basic = [];
-    protected $generalService;
+    private $basic = [];
+    private $generalService;
+    private $profileService;
 
-    public function __construct(GeneralServiceInterface $generalService)
+    public function __construct(GeneralServiceInterface $generalService, ProfileServiceInterface $profileService)
     {
+        $this->profileService = $profileService;
         $this->generalService = $generalService;
         $this->basic          = $this->generalService->basicItem();
     }
@@ -27,13 +30,11 @@ class profileController extends Controller
             "breadcrumb" => [["route" => "profile", "name" => "My Account"]]]);
     }
 
-    public function updateProfile(updateProfileRequest $request)
+    public function updateProfileUser(updateProfileRequest $request)
     {
-        $user = User::where('email', $request->email)->orWhere("id", $request->id)->first();
+        $updateProfile = $this->profileService->updateProfile(["name" => $request->name], $request->email);
 
-        if ($user) {
-            $user->update(["name" => $request->name]);
-
+        if ($updateProfile) {
             return redirect()->back()->with("session_success", "profile updated!");
         }
 
