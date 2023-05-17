@@ -105,14 +105,63 @@
 @endsection
 
 @push('form')
-  <form action="{{ route("shopping.cart.action") }}" method="POST" id="shoppingCart" hidden>
-    @csrf
-    <input type="text"  id="quantityOfProduct"  name="quantity"/>
-    <input type="text"  id="productIdOfProduct" name="product_id"/>
-  </form>
+    <form action="{{ route("shopping.cart.action") }}" method="POST" id="shoppingCart" hidden>
+        @csrf
+        <input type="text"  id="quantityOfProduct"  name="quantity"/>
+        <input type="text"  id="productIdOfProduct" name="product_id"/>
+    </form>
+
+    <div id="modalMessage" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Message</h5>
+                </div>
+                <div class="modal-body">
+                    <?php $msg = 0 ?>
+                    @if (Session::has("session_success"))
+                        <?php $msg = 1 ?>
+                        <div class="alert alert-success" role="alert">
+                            <li>{{ Session::get("session_success") }}</li>
+                        </div>
+                        <br><br>
+                    @endif
+                    @if (Session::has("session_errors"))
+                        <?php $msg = 1 ?>
+                        <div class="alert alert-danger" role="alert">
+                            <li>{{ Session::get("session_errors") }}</li>
+                        </div>
+                        <br><br>
+                    @endif
+                    @if ($errors->any())
+                        <?php $msg = 1 ?>
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </div>
+                        <br><br>
+                    @endif
+                    <input id="statusModal" value="{{ $msg }}" hidden>
+                </div>
+                <div class="modal-footer">
+                    <p>click outside this area to close it!</p>
+                </div>
+            </div>
+        </div>
+    </div>
 @endpush
 
 @push('footer')
     @include('root.includes.partner')
     @include('root.includes.footer')
+
+    <script src="http://127.0.0.1:8000/js/bootstrap.min.js"></script>
+    <script>
+        let msg   = document.getElementById("statusModal").value;
+
+        if (msg == 1) {
+            new bootstrap.Modal(document.getElementById('modalMessage')).show();
+        }
+    </script>
 @endpush

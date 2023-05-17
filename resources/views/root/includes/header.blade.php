@@ -43,7 +43,7 @@
                 @guest <a href="{{ route("signin")        }}"> @endguest
                 Keranjang Belanja &nbsp;
                   <i class="icon_bag_alt"></i>
-                  @auth <span></span> @endauth
+                  {{-- @auth <span></span> @endauth --}}
                 </a>
                 {{-- <div class="cart-hover">
                   @auth
