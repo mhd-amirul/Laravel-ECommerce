@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\auth\authController;
-use App\Http\Controllers\home\homeController;
-use App\Http\Controllers\shoppingCart\cartController;
+use App\Http\Controllers\authController;
+use App\Http\Controllers\homeController;
+use App\Http\Controllers\cartController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,19 +17,40 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get("/laravel-welcome", function () { return view("welcome"); });
 
-Route::get('/laravel-welcome', function () { return view('welcome'); });
 Route::group(["controller" => authController::class], function () {
-    Route::group(["midlleware" => "guest"], function () {
-        Route::get('signin', "goToLogin")->name("signin");
-        Route::get('signup', "goToRegister")->name("signup");
-        Route::post('signup-user', "createUser")->name("signup.create");
-        Route::post('signin-user', "logInUser")->name("signin.check");
+    Route::post("forget-password", "forgetPasswordUser")->name("forget.pass");
+    Route::get("reset-password",   "goToResetPassword" )->name("forget.pass.part2");
+    Route::post("reset-password",  "resetPasswordUser" )->name("reset.pass");
+
+    Route::middleware(["guest"])->group(function () {
+        Route::get("signin",       "goToLogin"    )->name("signin");
+        Route::get("signup",       "goToRegister" )->name("signup");
+        Route::post("signup-user", "signUpUser"   )->name("signup.create");
+        Route::post("signin-user", "signInUser"   )->name("signin.check");
     });
-    Route::post('signout-user', "logOutUser")->name("signout")->middleware("auth");
+
+    Route::middleware(["auth"])->group(function () {
+        Route::post("signout-user", "logOutUser")->name("signout");
+    });
 });
 
-Route::get('/', [homeController::class, "goToIndex"])->name("index");
-Route::get('product', [homeController::class, "goToProduct"])->name("product");
-Route::get('shopping-cart', [cartController::class, "goToShopCart"])->name("shopping.cart");
-Route::post('insert-shopping-cart', [cartController::class, "insertCart"])->name("insert.cart");
+Route::middleware(["auth"])->group(function () {
+    Route::group(["controller" => cartController::class], function () {
+        Route::get("shopping-cart",  "goToShopCart"      )->name("shopping.cart");
+        Route::post("shopping-cart", "shoppingCartAction")->name("shopping.cart.action")->middleware("auth");
+    });
+
+    Route::group(["controller" => profileController::class], function () {
+        Route::get("account-profile",   "goToProfile"      )->name("profile");
+        Route::post("account-profile2", "updateProfileUser")->name("update.profile");
+    });
+});
+
+Route::group(["controller" => homeController::class], function () {
+    Route::get("/",       "goToIndex"      )->name("index");
+    Route::get("product", "goToProduct"    )->name("product");
+    Route::post("contact-us", "saveMessage")->name("contact");
+});
+
