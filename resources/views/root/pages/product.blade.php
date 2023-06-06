@@ -94,9 +94,16 @@
                     </p>
                     <?php $product->discount != 0 ? $price = $product->price - ($product->price * ($product->discount / 100)) : null; ?>
                     @if ($product->discount == 0)
-                      <h4>${{ $product->price }}.00</h4>
+                      {{-- <h4>${{ $product->price }}.00</h4> --}}
+                      <h4>{{ 'Rp.' . number_format($item->price,2,',','.') }}</h4>
                     @else
-                      <h4> ${{ $price }}.00 <span> ${{ $product->price }}.00 </span> </h4>
+                      {{-- <h4> ${{ $price }}.00 <span> ${{ $product->price }}.00 </span> </h4> --}}
+                      <h4>{{ 'Rp.' . number_format($price,2,',','.') }}
+                        <span>
+                          {{ 'Rp.' . number_format($product->price,2,',','.') }}
+                          {{-- ${{ $product->price }}.00 --}}
+                        </span>
+                      </h4>
                     @endif
                   </div>
                   <div class="quantity">
@@ -154,9 +161,12 @@
                           <div class="product-price">
                             <?php $item->discount != 0 ? $price = $item->price - ($item->price * ($item->discount / 100)) : null; ?>
                             @if ($item->discount == 0)
-                              ${{ $item->price }}.00
+                              {{-- ${{ $item->price }}.00 --}}
+                              {{ 'Rp.' . number_format($item->price,2,',','.') }}
                             @else
-                              ${{ $price }}.00 <span> ${{ $item->price }}.00 </span>
+                              {{ 'Rp.' . number_format($price,2,',','.') }}
+                              <span>{{ 'Rp.' . number_format($item->price,2,',','.') }}</span>
+                              {{-- ${{ $price }}.00 <span> ${{ $item->price }}.00 </span> --}}
                             @endif
                           </div>
                         </div>
