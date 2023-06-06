@@ -71,10 +71,13 @@
                                 <div class="product-price">
                                     <?php $item->discount != 0 ? $price = $item->price - ($item->price * ($item->discount / 100)) : null; ?>
                                     @if ($item->discount == 0)
-                                        ${{ $item->price }}.00
+                                        {{-- ${{ $item->price }}.00 --}}
+                                        {{ 'Rp.' . number_format($item->price,2,',','.') }}
                                     @else
-                                        ${{ $price }}.00
-                                        <span>${{ $item->price }}.00</span>
+                                        {{ 'Rp.' . number_format($price,2,',','.') }}
+                                        <span>{{ 'Rp.' . number_format($item->price,2,',','.') }}</span>
+                                        {{-- ${{ $price }}.00
+                                        <span>${{ $item->price }}.00</span> --}}
                                     @endif
                                 </div>
                                 </div>
