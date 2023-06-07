@@ -29,7 +29,10 @@
                           <td class="cart-title {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
                             <a href="{{ route('product')."?product=".$item->products->id }}" class="text-dark"><h5>{{ $item->products->name }}</h5></a>
                           </td>
-                          <td class="p-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price }}.00</td>
+                          <td class="p-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                            {{-- ${{ $item->products->price }}.00 --}}
+                            {{ 'Rp.' . number_format($item->products->price,2,',','.') }}
+                          </td>
                           <td class="p-price text-dark {{ $loop->iteration == 1 ? 'first-row' : ''; }}">{{ $item->quantity }}</td>
                           {{-- <td class="qua-col {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
                             <div class="quantity">
@@ -38,7 +41,10 @@
                               </div>
                             </div>
                           </td> --}}
-                          <td class="total-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">${{ $item->products->price * $item->quantity }}.00</td>
+                          <td class="total-price {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
+                            {{-- ${{ $item->products->price * $item->quantity }}.00 --}}
+                            {{ 'Rp.' . number_format($item->products->price * $item->quantity,2,',','.') }}
+                          </td>
                           <td class="close-td {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
                             <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="text-decoration-none text-dark" onclick="getDataCart('{{ $item->products->id }}', '{{ $item->products->name }}', '{{ $item->quantity }}')"><i class="ti-close"></i></a>
                           </td>
@@ -54,10 +60,20 @@
                 <div class="col-lg-4 offset-lg-4">
                   <div class="proceed-checkout">
                     <ul>
-                      <li class="subtotal">Subtotal <span>${{ $subTotal }}.00</span></li>
-                      <li class="cart-total">Total <span>${{ $total }}.00</span></li>
+                      <li class="subtotal">Subtotal 
+                        <span>
+                          {{-- ${{ $subTotal }}.00 --}}
+                          {{ 'Rp.' . number_format($subTotal,2,',','.') }}
+                        </span>
+                      </li>
+                      <li class="cart-total">Total 
+                        <span>
+                          {{-- ${{ $total }}.00 --}}
+                          {{ 'Rp.' . number_format($total,2,',','.') }}
+                        </span>
+                      </li>
                     </ul>
-                    <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                    <a class="proceed-btn">PROCEED TO CHECK OUT</a>
                   </div>
                 </div>
               </div>
