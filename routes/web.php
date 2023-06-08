@@ -3,6 +3,7 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\cartController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
@@ -54,3 +55,8 @@ Route::group(["controller" => homeController::class], function () {
     Route::post("contact-us", "saveMessage")->name("contact");
 });
 
+
+// test midtrans
+Route::get('/midtrans-view', [CheckOutController::class, 'testmidtrans'])->name("midtrans0");
+Route::post('/midtrans-get', [CheckOutController::class, 'getData'])->name("midtrans1");
+Route::get('/midtrans-set', [CheckOutController::class, 'setData'])->name("midtrans2");
