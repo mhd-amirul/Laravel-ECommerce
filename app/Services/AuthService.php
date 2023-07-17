@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-// use App\Mail\resetPaswordMail;
 // use App\Repository\Interfaces\PasswordResetRepositoryInterface;
 // use App\Repository\Interfaces\UserRepositoryInterface;
 
+use App\Mail\resetPaswordMail;
+use App\Repository\Interfaces\PasswordResetRepositoryInterface;
 use App\Repository\Interfaces\UserRepositoryInterface;
 use App\Services\Interfaces\AuthServiceInterface;
 use Carbon\Carbon;
@@ -18,10 +19,10 @@ class AuthService implements AuthServiceInterface {
     private $userRepository;
     private $passwordResetRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, PasswordResetRepositoryInterface $passwordResetRepository)
     {
         $this->userRepository = $userRepository;
-        // $this->passwordResetRepository  = $passwordResetRepository;
+        $this->passwordResetRepository  = $passwordResetRepository;
     }
 
     public function signUp($email, $name, $password)
@@ -50,40 +51,40 @@ class AuthService implements AuthServiceInterface {
         return false;
     }
 
-    // public function forgetPassword($email)
-    // {
-    //     $user = $this->userRepository->getUserByEmailOrId($email);
+    public function forgetPassword($email)
+    {
+        $user = $this->userRepository->getUserByEmailOrId($email);
 
-    //     if ($user) {
-    //         $toDB = [
-    //             "forget_password_code"    => Hash::make($email.Carbon::now()->format("Y-m-d H:i:s")),
-    //             "expired_code"            => Carbon::now()->addHours(24)->format("Y-m-d H:i:s"),
-    //         ];
+        if ($user) {
+            $toDB = [
+                "forget_password_code"    => Hash::make($email.Carbon::now()->format("Y-m-d H:i:s")),
+                "expired_code"            => Carbon::now()->addHours(24)->format("Y-m-d H:i:s"),
+            ];
 
-    //         $codeReset  = $this->passwordResetRepository->PasswordReset()->where("user_id", $user->id)->first();
-    //         $response   = null;
+            $codeReset  = $this->passwordResetRepository->PasswordReset()->where("user_id", $user->id)->first();
+            $response   = null;
 
-    //         if ($codeReset) {
-    //             $response = $codeReset->update($toDB);
-    //         } else {
-    //             $toDB["user_id"]    = $user->id;
-    //             $response           = $this->passwordResetRepository->PasswordReset()->create($toDB);
-    //         }
+            if ($codeReset) {
+                $response = $codeReset->update($toDB);
+            } else {
+                $toDB["user_id"]    = $user->id;
+                $response           = $this->passwordResetRepository->PasswordReset()->create($toDB);
+            }
 
-    //         if ($response) {
-    //             Mail::to($user->email)
-    //                 ->send(new resetPaswordMail([
-    //                     "email" => $user->email,
-    //                     "name"  => $user->name,
-    //                     "uri"   => route('forget.pass.part2')."?code=".$toDB["forget_password_code"]
-    //             ]));
+            if ($response) {
+                Mail::to($user->email)
+                    ->send(new resetPaswordMail([
+                        "email" => $user->email,
+                        "name"  => $user->name,
+                        "uri"   => route('forget.pass.part2')."?code=".$toDB["forget_password_code"]
+                ]));
 
-    //             return true;
-    //         }
-    //     }
+                return true;
+            }
+        }
 
-    //     return false;
-    // }
+        return false;
+    }
 
     // public function checkResetPasswordCode($code)
     // {

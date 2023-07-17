@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\forgetPasswordRequest;
 use App\Http\Requests\signinRequest;
 use App\Http\Requests\signupRequest;
 use App\Services\Interfaces\AuthServiceInterface;
@@ -64,5 +65,15 @@ class authController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route("signin")->with("session_success", "Sign Out success!");
+    }
+
+    public function forgetPasswordUser(forgetPasswordRequest $request)
+    {
+        $user = $this->authService->forgetPassword($request->email);
+
+        $message["status" ] = $user ? "session_success"  : "session_errors";
+        $message["message"] = $user ? "email was sent!"  : "failed!";
+
+        return redirect()->back()->with($message["status"], $message["message"]);
     }
 }
