@@ -1,14 +1,14 @@
 <!-- Js Plugins -->
-<script src="{{ url('js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url('js/bootstrap.min.js') }}"></script>
-<script src="{{ url('js/jquery-ui.min.js') }}"></script>
-<script src="{{ url('js/jquery.countdown.min.js') }}"></script>
-<script src="{{ url('js/jquery.nice-select.min.js') }}"></script>
-<script src="{{ url('js/jquery.zoom.min.js') }}"></script>
-<script src="{{ url('js/jquery.dd.min.js') }}"></script>
-<script src="{{ url('js/jquery.slicknav.js') }}"></script>
-<script src="{{ url('js/owl.carousel.min.js') }}"></script>
-<script src="{{ url('js/main.js') }}"></script>
+<script src="{{ url('Assets/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url('Assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ url('Assets/js/jquery-ui.min.js') }}"></script>
+<script src="{{ url('Assets/js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url('Assets/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ url('Assets/js/jquery.zoom.min.js') }}"></script>
+<script src="{{ url('Assets/js/jquery.dd.min.js') }}"></script>
+<script src="{{ url('Assets/js/jquery.slicknav.js') }}"></script>
+<script src="{{ url('Assets/js/owl.carousel.min.js') }}"></script>
+<script src="{{ url('Assets/js/main.js') }}"></script>
 
 <script>
     function submitForm(id) {

@@ -8,7 +8,7 @@
     <div class="hero-items owl-carousel">
         @if (isset($discount))
             @foreach ($discount as $item)
-                <div class="single-hero-items set-bg" data-setbg="{{ asset('storage/'.$item->image) }}">
+                <div class="single-hero-items set-bg" data-setbg="{{ url($item->image) }}">
                     <div class="container">
                         <div class="row">
                         <div class="col-lg-5">
@@ -48,7 +48,7 @@
                         @foreach ($products as $item)
                             <div class="product-item">
                                 <div class="pi-pic">
-                                <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
+                                <img src="{{ url($item->image) }}" alt="" height="427" width="380"/>
                                 <div class="sale">Sale</div>
                                 {{-- <div class="icon">
                                     <i class="icon_heart_alt"></i>
@@ -95,7 +95,7 @@
     <div class="instagram-photo">
         @if (isset($instagram))
             @foreach ($instagram as $item)
-                <div class="insta-item set-bg" data-setbg="{{ asset('storage/'.$item->uri) }}">
+                <div class="insta-item set-bg" data-setbg="{{ url($item->uri) }}">
                     <div class="inside-text">
                     <i class="ti-instagram"></i>
                     <h5><a href="#">colorlib_Collection</a></h5>
@@ -159,7 +159,7 @@
     @include('root.includes.partner')
     @include('root.includes.footer')
 
-    <script src="http://127.0.0.1:8000/js/bootstrap.min.js"></script>
+    <script src="{{ url("Assets/js/bootstrap.min.js") }}"></script>
     <script>
         let msg   = document.getElementById("statusModal").value;
 

@@ -6,7 +6,7 @@
             @foreach ($basic["partner"] as $partner)
               <div class="logo-item">
                 <div class="tablecell-inner">
-                  <img src="{{ asset('storage/'.$partner->uri) }}" alt="{{ $partner->name }}" />
+                  <img src="{{ url($partner['uri']) }}" alt="{{ $partner['name'] }}" />
                 </div>
               </div>
             @endforeach

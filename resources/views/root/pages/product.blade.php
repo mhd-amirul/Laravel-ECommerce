@@ -9,20 +9,20 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="product-pic-zoom">
-                  <img class="product-big-img" src="{{ asset('storage/'.$product->image) }}" alt="" />
+                  <img class="product-big-img" src="{{ url($product->image) }}" alt="" />
                   <div class="zoom-icon">
                     <i class="fa fa-search-plus"></i>
                   </div>
                 </div>
                 <div class="product-thumbs">
                   <div class="product-thumbs-track ps-slider owl-carousel">
-                    <div class="pt active" data-imgbigurl="{{ asset('storage/'.$product->image) }}" >
-                      <img src="{{ asset('storage/'.$product->image) }}" alt="" />
+                    <div class="pt active" data-imgbigurl="{{ url($product->image) }}" >
+                      <img src="{{ url($product->image) }}" alt="" />
                     </div>
 
                     {{-- @foreach ($collection as $item) --}}
-                      <div class="pt" data-imgbigurl="{{ asset('storage/'.$product->image) }}" >
-                        <img src="{{ asset('storage/'.$product->image) }}" alt="" />
+                      <div class="pt" data-imgbigurl="{{ url($product->image) }}" >
+                        <img src="{{ url($product->image) }}" alt="" />
                       </div>
                     {{-- @endforeach --}}
                   </div>
@@ -95,7 +95,7 @@
                     <?php $product->discount != 0 ? $price = $product->price - ($product->price * ($product->discount / 100)) : null; ?>
                     @if ($product->discount == 0)
                       {{-- <h4>${{ $product->price }}.00</h4> --}}
-                      <h4>{{ 'Rp.' . number_format($item->price,2,',','.') }}</h4>
+                      <h4>{{ 'Rp.' . number_format($product->price,2,',','.') }}</h4>
                     @else
                       {{-- <h4> ${{ $price }}.00 <span> ${{ $product->price }}.00 </span> </h4> --}}
                       <h4>{{ 'Rp.' . number_format($price,2,',','.') }}
@@ -138,7 +138,7 @@
                   @foreach ($related as $item)
                     <div class="product-item">
                         <div class="pi-pic">
-                        <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
+                        <img src="{{ url($item->image) }}" alt="" height="427" width="380"/>
                         <div class="sale">Sale</div>
                         {{-- <div class="icon">
                             <a class="heart-icon"><i class="icon_heart_alt"></i></a>
