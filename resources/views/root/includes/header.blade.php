@@ -31,7 +31,7 @@
           <div class="col-lg-2 col-md-2">
             <div class="logo">
               <a href="{{ route("index") }}">
-                <img src="{{ url('images/logo.png') }}" alt="" />
+                <img src="{{ url('Assets/images/logo/logo.png') }}" alt="" />
               </a>
             </div>
           </div>

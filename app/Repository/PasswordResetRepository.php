@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Models\PasswordReset;
+use App\Model\PasswordResetAccount;
 use App\Repository\Interfaces\PasswordResetRepositoryInterface;
 
 class PasswordResetRepository implements PasswordResetRepositoryInterface {
@@ -11,7 +11,7 @@ class PasswordResetRepository implements PasswordResetRepositoryInterface {
 
     public function __construct()
     {
-        $this->passwordReset = new PasswordReset();
+        $this->passwordReset = new PasswordResetAccount();
     }
 
     public function PasswordReset()

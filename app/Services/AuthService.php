@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+// use App\Repository\Interfaces\PasswordResetRepositoryInterface;
+// use App\Repository\Interfaces\UserRepositoryInterface;
+
 use App\Mail\resetPaswordMail;
 use App\Repository\Interfaces\PasswordResetRepositoryInterface;
 use App\Repository\Interfaces\UserRepositoryInterface;
@@ -83,40 +86,40 @@ class AuthService implements AuthServiceInterface {
         return false;
     }
 
-    public function checkResetPasswordCode($code)
-    {
-        $code = $this->passwordResetRepository->getByCode($code);
+    // public function checkResetPasswordCode($code)
+    // {
+    //     $code = $this->passwordResetRepository->getByCode($code);
 
-        if ($code) {
-            $user = $this->userRepository->User()->where("id", $code->user_id)->exists();
+    //     if ($code) {
+    //         $user = $this->userRepository->User()->where("id", $code->user_id)->exists();
 
-            if ($user) {
-                if (!Carbon::now()->diff(new Carbon($code->expired_code))->invert) {
-                    return $code;
-                }
+    //         if ($user) {
+    //             if (!Carbon::now()->diff(new Carbon($code->expired_code))->invert) {
+    //                 return $code;
+    //             }
 
-                $code->delete();
-                return false;
-            }
-        }
+    //             $code->delete();
+    //             return false;
+    //         }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    public function resetPassword($code, $password)
-    {
-        $code = $this->passwordResetRepository->getByCode($code);
+    // public function resetPassword($code, $password)
+    // {
+    //     $code = $this->passwordResetRepository->getByCode($code);
 
-        if ($code) {
-            $user = $this->userRepository->getUserByEmailOrId($code->user_id);
+    //     if ($code) {
+    //         $user = $this->userRepository->getUserByEmailOrId($code->user_id);
 
-            if ($user) {
-                $user->update(["password" => Hash::make($password)]);
-                $code->delete();
-                return true;
-            }
-        }
+    //         if ($user) {
+    //             $user->update(["password" => Hash::make($password)]);
+    //             $code->delete();
+    //             return true;
+    //         }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 }

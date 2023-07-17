@@ -8,11 +8,9 @@ use App\Repository\Interfaces\CartRepositoryInterface;
 use App\Repository\Interfaces\ContactRepositoryInterface;
 use App\Repository\Interfaces\PasswordResetRepositoryInterface;
 use App\Repository\Interfaces\ProductRepositoryInterface;
-use App\Repository\Interfaces\ResourcesRepositoryInterface;
 use App\Repository\Interfaces\UserRepositoryInterface;
 use App\Repository\PasswordResetRepository;
 use App\Repository\ProductRepository;
-use App\Repository\ResourcesRepository;
 use App\Repository\UserRepository;
 use App\Services\AuthService;
 use App\Services\CartService;
@@ -30,8 +28,10 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
+     *
+     * @return void
      */
-    public function register(): void
+    public function register()
     {
         // services
         $this->app->bind(GeneralServiceInterface::class, GeneralService::class);
@@ -39,20 +39,22 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CartServiceInterface::class, CartService::class);
         $this->app->bind(ProductServiceInterface::class, ProductService::class);
         $this->app->bind(ProfileServiceInterface::class, ProfileService::class);
-
+        
         // repositories
-        $this->app->bind(ResourcesRepositoryInterface::class, ResourcesRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(PasswordResetRepositoryInterface::class, PasswordResetRepository::class);
         $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
-        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(ContactRepositoryInterface::class, ContactRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+
     }
 
     /**
      * Bootstrap any application services.
+     *
+     * @return void
      */
-    public function boot(): void
+    public function boot()
     {
         //
     }

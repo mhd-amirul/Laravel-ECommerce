@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\shoppingCartRequest;
-use App\Models\Cart;
 use App\Services\Interfaces\CartServiceInterface;
 use App\Services\Interfaces\GeneralServiceInterface;
 use Illuminate\Http\Request;
@@ -18,11 +16,11 @@ class cartController extends Controller
     public function __construct(GeneralServiceInterface $generalService, CartServiceInterface $cartService)
     {
         $this->generalService   = $generalService;
-        $this->basic            = $this->generalService->basicItem();
         $this->cartService      = $cartService;
+        $this->basic            = $this->generalService->basicItem();
     }
-
-    public function goToShopCart()
+    
+    public function cartPage()
     {
         return view("root.pages.shopping-cart")->with([
             "basic"         => $this->basic,
@@ -37,5 +35,4 @@ class cartController extends Controller
 
         return redirect()->route("shopping.cart");
     }
-
 }

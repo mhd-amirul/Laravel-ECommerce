@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Models\contact;
+use App\Model\Contact;
 use App\Repository\Interfaces\ContactRepositoryInterface;
 
 class ContactRepository implements ContactRepositoryInterface {
@@ -11,7 +11,7 @@ class ContactRepository implements ContactRepositoryInterface {
 
     public function __construct()
     {
-        $this->contact = new contact();
+        $this->contact = new Contact();
     }
 
     public function Contact()

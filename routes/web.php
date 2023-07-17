@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\authController;
-use App\Http\Controllers\homeController;
 use App\Http\Controllers\cartController;
-use App\Http\Controllers\CheckOutController;
-use App\Http\Controllers\LikeController;
+use App\Http\Controllers\homeController;
 use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,49 +12,34 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
-Route::get("/laravel-welcome", function () { return view("welcome"); });
 
-Route::group(["controller" => authController::class], function () {
-    Route::post("forget-password", "forgetPasswordUser")->name("forget.pass");
-    Route::get("reset-password",   "goToResetPassword" )->name("forget.pass.part2");
-    Route::post("reset-password",  "resetPasswordUser" )->name("reset.pass");
+// Route::get('/', function () { return view('welcome'); });
 
-    Route::middleware(["guest"])->group(function () {
-        Route::get("signin",       "goToLogin"    )->name("signin");
-        Route::get("signup",       "goToRegister" )->name("signup");
-        Route::post("signup-user", "signUpUser"   )->name("signup.create");
-        Route::post("signin-user", "signInUser"   )->name("signin.check");
-    });
+Route::get("/", [homeController::class, "indexPage"])->name("index");
+Route::post("contact-us", [homeController::class, "saveMessage"])->name("contact");
+Route::get("product", [homeController::class, "productPage"])->name("product");
 
-    Route::middleware(["auth"])->group(function () {
-        Route::post("signout-user", "logOutUser")->name("signout");
-    });
+Route::middleware(["guest"])->group(function () {
+    Route::get("signin", [authController::class, "loginPage"])->name("signin");
+    Route::get("signup", [authController::class, "registerPage"])->name("signup");
+    Route::post("signup-user", [authController::class, "signUpUser"])->name("signup.create");
+    Route::post("signin-user", [authController::class, "signInUser"])->name("signin.check");
 });
 
 Route::middleware(["auth"])->group(function () {
-    Route::group(["controller" => cartController::class], function () {
-        Route::get("shopping-cart",  "goToShopCart"      )->name("shopping.cart");
-        Route::post("shopping-cart", "shoppingCartAction")->name("shopping.cart.action")->middleware("auth");
-    });
+    Route::post("signout-user", [authController::class, "logOutUser"])->name("signout");
+    
+    Route::get("shopping-cart", [cartController::class, "cartPage"])->name("shopping.cart");
+    Route::post("shopping-cart", [cartController::class, "shoppingCartAction"])->name("shopping.cart.action");
 
-    Route::group(["controller" => profileController::class], function () {
-        Route::get("account-profile",   "goToProfile"      )->name("profile");
-        Route::post("account-profile2", "updateProfileUser")->name("update.profile");
-    });
+    Route::get("account-profile", [profileController::class, "profilePage"])->name("profile");
+    Route::post("account-profile2", [profileController::class, "updateProfileUser"])->name("update.profile");
+
 });
 
-Route::group(["controller" => homeController::class], function () {
-    Route::get("/",       "goToIndex"      )->name("index");
-    Route::get("product", "goToProduct"    )->name("product");
-    Route::post("contact-us", "saveMessage")->name("contact");
-});
-
-
-// test midtrans
-Route::get('/midtrans-view', [CheckOutController::class, 'testmidtrans'])->name("midtrans0");
-Route::post('/midtrans-get', [CheckOutController::class, 'getData'])->name("midtrans1");
-Route::get('/midtrans-set', [CheckOutController::class, 'setData'])->name("midtrans2");
+Route::post("forget-password", [authController::class, "forgetPasswordUser"])->name("forget.pass");
+Route::get("reset-password",   function () { return view('welcome'); })->name("forget.pass.part2");

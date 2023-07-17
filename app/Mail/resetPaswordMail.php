@@ -5,9 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class resetPaswordMail extends Mailable implements ShouldQueue
@@ -17,6 +14,8 @@ class resetPaswordMail extends Mailable implements ShouldQueue
     protected $item;
     /**
      * Create a new message instance.
+     *
+     * @return void
      */
     public function __construct(array $item)
     {
@@ -24,37 +23,17 @@ class resetPaswordMail extends Mailable implements ShouldQueue
     }
 
     /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            from: new Address("Fashi@gmail.com", "Fashi."),
-            subject: 'Reset Pasword Verification'
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'mail.ResetPassword',
-            with: [
-                "uri"  => $this->item["uri"],
-                "name" => $this->item["name"]
-            ]
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
+     * Build the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return $this
      */
-    public function attachments(): array
+    public function build()
     {
-        return [];
+        return $this->from("danwe371@gmail.com", "No Reply")
+                    ->view('mail.ResetPassword')
+                    ->with([
+                        "uri"  => $this->item["uri"],
+                        "name" => $this->item["name"]
+                    ]);
     }
 }

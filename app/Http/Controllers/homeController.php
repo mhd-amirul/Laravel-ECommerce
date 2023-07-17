@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\contactRequest;
-use App\Http\Requests\updateProfileRequest;
-use App\Models\contact;
-use App\Models\Product;
-use App\Models\Rating;
-use App\Models\Resource;
+use App\Model\Resource;
 use App\Services\Interfaces\GeneralServiceInterface;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Http\Request;
@@ -21,12 +16,12 @@ class homeController extends Controller
 
     public function __construct(GeneralServiceInterface $generalService, ProductServiceInterface $productService)
     {
-        $this->generalService = $generalService;
-        $this->basic          = $this->generalService->basicItem();
-        $this->productService = $productService;
+        $this->generalService   = $generalService;
+        $this->basic            = $this->generalService->basicItem();
+        $this->productService   = $productService;
     }
 
-    public function goToIndex()
+    public function indexPage()
     {
         $product  = $this->productService->getProductDiscount();
 
@@ -40,7 +35,7 @@ class homeController extends Controller
             ]);
     }
 
-    public function goToProduct()
+    public function productPage()
     {
         if (!request()->has("product"))
             return redirect()->route("index");

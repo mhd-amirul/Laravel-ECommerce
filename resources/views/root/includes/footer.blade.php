@@ -5,7 +5,7 @@
         <div class="col-lg-5">
           <div class="footer-left">
             <div class="footer-logo">
-              <a href="#"><img src="{{ url('images/footer-logo.png') }}" alt=""/></a>
+              <a href="#"><img src="{{ url('Assets/images/logo/footer-logo.png') }}" alt=""/></a>
             </div>
             <ul>
               <li>Address: {{ $basic["shop_address"] }}</li>
@@ -13,10 +13,10 @@
               <li>Email: {{ $basic["shop_email"] }}</li>
             </ul>
             <div class="footer-social">
-              <a href="https://www.facebook.com/profile.php?id=100008272813247"><i class="fa fa-facebook"></i></a>
-              <a href="https://www.instagram.com/amirul_m236/"><i class="fa fa-instagram"></i></a>
+              <a href="https://facebook.com/profile.php?id=100008272813247"><i class="fa fa-facebook"></i></a>
+              <a href="https://instagram.com/amirul_m236/"><i class="fa fa-instagram"></i></a>
               <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
-              <a href="https://id.pinterest.com"><i class="fa fa-pinterest"></i></a>
+              <a href="https://linkedin.com/in/mhd-amirul"><i class="fa fa-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
           <div class="footer-widget">
             <h5>Information</h5>
             <ul>
-              <li><a href="https://mhd-amirul.github.io/MyPortfolio/">About Us</a></li>
+              <li><a href="https://muhammad-amirul.vercel.app">About Us</a></li>
               <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Contact</a></li>
             </ul>
           </div>
@@ -49,10 +49,10 @@
               <script>
                 document.write(new Date().getFullYear());
               </script>
-              All rights reserved | Fashi
+              All rights reserved | Muhammad Amirul
             </div>
             <div class="payment-pic">
-              <img src="{{ url('images/payment-method.png') }}" alt="" />
+              <img src="{{ url('Assets/images/logo/payment-method.png') }}" alt="" />
             </div>
           </div>
         </div>
@@ -72,11 +72,11 @@
           @csrf
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">email:</label>
-            <input type="email" class="form-control" id="recipient-name" name="email">
+            <input id="emailuser" type="email" class="form-control" id="recipient-name" name="email">
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">name:</label>
-            <input type="text" class="form-control" id="recipient-name" name="name">
+            <input id="nameuser" type="text" class="form-control" id="recipient-name" name="name">
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Message:</label>

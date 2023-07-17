@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\updateProfileRequest;
-use App\Models\User;
 use App\Services\Interfaces\GeneralServiceInterface;
 use App\Services\Interfaces\ProfileServiceInterface;
 use Illuminate\Http\Request;
@@ -21,7 +20,7 @@ class profileController extends Controller
         $this->basic          = $this->generalService->basicItem();
     }
 
-    public function goToProfile()
+    public function profilePage()
     {
         return view("root.pages.profile")->with([
             "basic"      => $this->basic,

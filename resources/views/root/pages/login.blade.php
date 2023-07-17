@@ -32,8 +32,8 @@
                 @csrf
                 @method("post")
                 <div class="group-input">
-                    <label for="email">Email address *</label>
-                    <input type="text" id="email" name="email" value="{{ old('email') }}"/>
+                    <label for="emaill">Email address *</label>
+                    <input type="text" id="emaill" name="email" value="{{ old('email') }}"/>
                 </div>
                 <div class="group-input">
                     <label for="pass">Password *</label>
