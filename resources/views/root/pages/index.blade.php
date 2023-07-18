@@ -1,40 +1,38 @@
 @extends('root.layouts.user_main')
 
 @section('content')
-    
-
     <!-- Hero Section Begin -->
     <section class="hero-section">
-    <div class="hero-items owl-carousel">
-        @if (isset($discount))
-            @foreach ($discount as $item)
-                <div class="single-hero-items set-bg" data-setbg="{{ asset('storage/'.$item->image) }}">
-                    <div class="container">
-                        <div class="row">
-                        <div class="col-lg-5">
-                            <span>{{ $item->category }}</span>
-                            <h1>{{ $item->name }}</h1>
-                            <p>
-                            <?php
-                                $description = $item->description;
-                                $description = (strlen($description) > 140) ? substr($description, 0, 140)."..." : $description;
-                            ?>
-                            {{ $description }} <a href="{{ route("product")."?product=".$item->id }}" style="color: black">see detail</a>
-                            {{-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore --}}
-                            </p>
-                            {{-- <p>{{ $item->description }}</p> --}}
-                            <a href="{{ route("product")."?product=".$item->id }}" class="primary-btn">Shop Now</a>
-                        </div>
-                        </div>
-                        <div class="off-card">
-                        <h2>Sale <span>{{ $item->discount }}%</span></h2>
+        <div class="hero-items owl-carousel">
+            @if (isset($discount))
+                @foreach ($discount as $item)
+                    <div class="single-hero-items set-bg" data-setbg="{{ url($item->image) }}">
+                        <div class="container">
+                            <div class="row">
+                            <div class="col-lg-5">
+                                <span>{{ $item->category }}</span>
+                                <h1>{{ $item->name }}</h1>
+                                <p>
+                                <?php
+                                    $description = $item->description;
+                                    $description = (strlen($description) > 140) ? substr($description, 0, 140)."..." : $description;
+                                ?>
+                                {{ $description }} <a href="{{ route("product")."?product=".$item->id }}" style="color: black">see detail</a>
+                                {{-- Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                                do eiusmod tempor incididunt ut labore et dolore --}}
+                                </p>
+                                {{-- <p>{{ $item->description }}</p> --}}
+                                <a href="{{ route("product")."?product=".$item->id }}" class="primary-btn">Shop Now</a>
+                            </div>
+                            </div>
+                            <div class="off-card">
+                            <h2>Sale <span>{{ $item->discount }}%</span></h2>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        @endif            
-    </div>
+                @endforeach
+            @endif            
+        </div>
     </section>
     <!-- Hero Section End -->
 
@@ -48,7 +46,7 @@
                         @foreach ($products as $item)
                             <div class="product-item">
                                 <div class="pi-pic">
-                                <img src="{{ asset('storage/'.$item->image) }}" alt="" height="427" width="380"/>
+                                <img src="{{ url($item->image) }}" alt="" height="427" width="380"/>
                                 <div class="sale">Sale</div>
                                 {{-- <div class="icon">
                                     <i class="icon_heart_alt"></i>
@@ -95,10 +93,10 @@
     <div class="instagram-photo">
         @if (isset($instagram))
             @foreach ($instagram as $item)
-                <div class="insta-item set-bg" data-setbg="{{ asset('storage/'.$item->uri) }}">
+                <div class="insta-item set-bg" data-setbg="{{ url($item->uri) }}">
                     <div class="inside-text">
                     <i class="ti-instagram"></i>
-                    <h5><a href="#">colorlib_Collection</a></h5>
+                    <h5><a>colorlib_Collection</a></h5>
                     </div>
                 </div>
             @endforeach
@@ -125,14 +123,14 @@
                     @if (Session::has("session_success"))
                         <?php $msg = 1 ?>
                         <div class="alert alert-success" role="alert">
-                            <li>{{ Session::get("session_success") }}</li>
+                            <li style="list-style-type: none">{{ Session::get("session_success") }}</li>
                         </div>
                         <br><br>
                     @endif
                     @if (Session::has("session_errors"))
                         <?php $msg = 1 ?>
                         <div class="alert alert-danger" role="alert">
-                            <li>{{ Session::get("session_errors") }}</li>
+                            <li style="list-style-type: none">{{ Session::get("session_errors") }}</li>
                         </div>
                         <br><br>
                     @endif
@@ -140,7 +138,7 @@
                         <?php $msg = 1 ?>
                         <div class="alert alert-danger" role="alert">
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                <li style="list-style-type: none">{{ $error }}</li>
                             @endforeach
                         </div>
                         <br><br>
@@ -159,7 +157,7 @@
     @include('root.includes.partner')
     @include('root.includes.footer')
 
-    <script src="http://127.0.0.1:8000/js/bootstrap.min.js"></script>
+    <script src="{{ url("Assets/js/bootstrap.min.js") }}"></script>
     <script>
         let msg   = document.getElementById("statusModal").value;
 
