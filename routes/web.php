@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/laravel-welcome", function () { return view("welcome"); });
+Route::get("/welcome", function () { return view("welcome"); });
 
 Route::group(["controller" => authController::class], function () {
     Route::post("forget-password", "forgetPasswordUser")->name("forget.pass");
