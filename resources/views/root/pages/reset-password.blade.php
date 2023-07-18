@@ -25,11 +25,11 @@
                     @csrf
                     <input type="text" value="{{ $code }}"    hidden name="code">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">new password:</label>
+                        <label for="pass" class="col-form-label">new password:</label>
                         <input type="password" class="form-control" id="pass" name="pass">
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">confirm new password:</label>
+                        <label for="con_pass" class="col-form-label">confirm new password:</label>
                         <input type="password" class="form-control" id="con_pass" name="con_pass">
                     </div>
                 </form>

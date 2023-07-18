@@ -24,7 +24,7 @@
                       @foreach ($shoppingCart as $item)
                         <tr>
                           <td class="cart-pic {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
-                            <img src="{{ asset('storage/'.$item->products->image) }}" alt="" width="170" height="170"/>
+                            <img src="{{ url($item->products->image) }}" alt="" width="170" height="170"/>
                           </td>
                           <td class="cart-title {{ $loop->iteration == 1 ? 'first-row' : ''; }}">
                             <a href="{{ route('product')."?product=".$item->products->id }}" class="text-dark"><h5>{{ $item->products->name }}</h5></a>

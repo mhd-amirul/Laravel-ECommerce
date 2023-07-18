@@ -3,27 +3,57 @@
 namespace App\Services;
 
 use App\Repository\Interfaces\ContactRepositoryInterface;
-use App\Repository\Interfaces\ResourcesRepositoryInterface;
 use App\Services\Interfaces\GeneralServiceInterface;
 
 class GeneralService implements GeneralServiceInterface {
 
-    protected $resourceRepository;
     protected $contactRepository;
 
-    public function __construct(ResourcesRepositoryInterface $resourceRepository, ContactRepositoryInterface $contactRepository)
+    public function __construct(ContactRepositoryInterface $contactRepository)
     {
-        $this->resourceRepository = $resourceRepository;
         $this->contactRepository  = $contactRepository ;
     }
 
     public function basicItem()
-    {        
+    {
+        $partner = [
+            [
+                "name"  => "banToni",
+                "type"  => "image",
+                "group" => "partner",
+                "uri"   => "Assets/images/partner/logo-1.png"
+            ],
+            [
+                "name"  => "vCorp",
+                "type"  => "image",
+                "group" => "partner",
+                "uri"   => "Assets/images/partner/logo-2.png"
+            ],
+            [
+                "name"  => "alitume",
+                "type"  => "image",
+                "group" => "partner",
+                "uri"   => "Assets/images/partner/logo-3.png"
+            ],
+            [
+                "name"  => "zukata",
+                "type"  => "image",
+                "group" => "partner",
+                "uri"   => "Assets/images/partner/logo-4.png"
+            ],
+            [
+                "name"  => "vicink",
+                "type"  => "image",
+                "group" => "partner",
+                "uri"   => "Assets/images/partner/logo-5.png"
+            ],
+        ];
+
         $basic    = [
-            "shop_email"   => "Fashi.@gmail.com",
+            "shop_email"   => "Hello@SingleEcommerce.com",
             "shop_number"  => "+62 810 2010 2020",
             "shop_address" => "Denpasar, Bali",
-            "partner"      => $this->resourceRepository->getResourceByGroup(["partner"])["partner"]
+            "partner"      => $partner
         ];
 
         return $basic;

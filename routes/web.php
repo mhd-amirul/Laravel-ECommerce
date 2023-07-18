@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\authController;
-use App\Http\Controllers\homeController;
 use App\Http\Controllers\cartController;
-use App\Http\Controllers\CheckOutController;
-use App\Http\Controllers\LikeController;
+use App\Http\Controllers\homeController;
 use App\Http\Controllers\profileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +12,11 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get("/laravel-welcome", function () { return view("welcome"); });
 
 Route::group(["controller" => authController::class], function () {
@@ -54,9 +53,3 @@ Route::group(["controller" => homeController::class], function () {
     Route::get("product", "goToProduct"    )->name("product");
     Route::post("contact-us", "saveMessage")->name("contact");
 });
-
-
-// test midtrans
-Route::get('/midtrans-view', [CheckOutController::class, 'testmidtrans'])->name("midtrans0");
-Route::post('/midtrans-get', [CheckOutController::class, 'getData'])->name("midtrans1");
-Route::get('/midtrans-set', [CheckOutController::class, 'setData'])->name("midtrans2");
