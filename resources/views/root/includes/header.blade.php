@@ -28,14 +28,14 @@
     <div class="container">
       <div class="inner-header">
         <div class="row">
-          <div class="col-lg-2 col-md-2">
+          <div class="col-lg-4 col-md-2">
             <div class="logo">
               <a href="{{ route("index") }}">
-                <img src="{{ url('images/logo.png') }}" alt="" />
+                <img src="{{ url('Assets/images/logo/logo.png') }}" alt=""/>
               </a>
             </div>
           </div>
-          <div class="col-lg-7 col-md-7"></div>
+          <div class="col-lg-5 col-md-7"></div>
           <div class="col-lg-3 text-right col-md-3">
             <ul class="nav-right">
               <li class="cart-icon">
